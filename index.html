@@ -1,597 +1,1075 @@
-<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Vyrnexa AI</title>
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vyrnexa AI</title>
+
 <style>
-:root{--bg:#0b0f15;--p:#121821;--p2:#18202c;--b:#253042;--t:#e8edf5;--m:#8b98ad;--a:#3dd6c6;--ak:#06231f;--u:#1b2a3f;--e:#ff7a7a;--w:#f2c14e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-:root[data-theme=light]{--bg:#f4f6fa;--p:#fff;--p2:#eef1f6;--b:#d5dbe6;--t:#151b26;--m:#5d6b82;--a:#0b8f84;--ak:#fff;--u:#dbe8f7;--e:#c93a3a;--w:#9a6b00}
-*{box-sizing:border-box}html,body{height:100%;margin:0}body{background:var(--bg);color:var(--t);font:15px/1.5 "Segoe UI",system-ui,sans-serif}
-button,input,textarea,select{font:inherit;color:inherit;background:var(--p2);border:1px solid var(--b);border-radius:8px;padding:10px 12px;min-height:44px}
-button{cursor:pointer;background:var(--a);color:var(--ak);border:0;font-weight:600}button.g{background:var(--p2);color:var(--t);border:1px solid var(--b);font-weight:500}button:disabled{opacity:.4}
-textarea{resize:vertical;width:100%}#app{display:flex;height:100%}
-#sb{width:290px;background:var(--p);border-right:1px solid var(--b);display:flex;flex-direction:column;padding:12px;gap:8px;overflow:hidden}
-#nav{display:flex;flex-direction:column;gap:2px;margin:6px 0}#nav button{display:flex;align-items:center;gap:12px;min-height:44px;background:none;color:var(--m);border:0;border-radius:8px;font-weight:500;font-size:14px;text-align:left;position:relative}#nav button:hover,#nav button.on{background:var(--p2);color:var(--t)}#nav button.on::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:2px;background:var(--a)}
-.si,#nav svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}#bk,#xb{display:none}.sh{display:flex;align-items:center;justify-content:space-between}
-#list{flex:1;overflow:auto}.ci{display:flex;gap:6px;align-items:center;padding:8px;border-radius:8px;cursor:pointer}.ci.on,.ci:hover{background:var(--p2)}
-.ci .tt{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.ic{padding:4px 8px;min-height:32px;background:none;color:var(--m);border:0}
-#mn{flex:1;display:flex;flex-direction:column;min-width:0}#hd{display:flex;gap:10px;align-items:center;padding:8px 14px;border-bottom:1px solid var(--b);flex-wrap:wrap}
-#hd b{font-size:17px;letter-spacing:.3px}.bd{background:var(--w);color:#1d1400;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:700}.mt{color:var(--m);font-size:13px}#hb{display:none}
-#v{flex:1;overflow:auto;display:flex;flex-direction:column;min-height:0}.pg{padding:16px;max-width:900px;width:100%;margin:0 auto}
-#ms{flex:1;overflow:auto;padding:14px}.mw{max-width:820px;margin:0 auto 14px}.m{padding:10px 14px;border-radius:12px;overflow-wrap:anywhere}.m.u{background:var(--u);white-space:pre-wrap;width:fit-content;max-width:100%}.m.a{background:var(--p);border:1px solid var(--b)}
-.ma{display:flex;gap:4px;align-items:center;color:var(--m);font-size:12px;margin-top:4px}.ma button{min-height:32px;padding:2px 10px;background:none;color:var(--m);border:0;font-weight:500}
-.cb{margin:8px 0;border:1px solid var(--b);border-radius:8px;overflow:hidden}.ch{display:flex;justify-content:space-between;align-items:center;background:var(--p2);padding:2px 8px;color:var(--m);font-size:12px}.ch button{min-height:30px;padding:2px 10px;background:none;color:var(--a)}
-pre{margin:0;padding:10px;overflow:auto;font:13px/1.45 ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace;font-size:.92em;background:var(--p2);padding:1px 5px;border-radius:4px}pre code{background:none;padding:0}
-.dots span{display:inline-block;width:7px;height:7px;margin:0 2px;border-radius:50%;background:var(--m);animation:bl 1s infinite}.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}@keyframes bl{50%{opacity:.2}}
-#cp{position:relative;border-top:1px solid var(--b);padding:10px;display:flex;gap:8px;align-items:flex-end}#cp textarea{flex:1;min-height:46px;max-height:160px;resize:none}
-.ib{width:46px;height:46px;min-width:46px;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--p2);color:var(--t);border:1px solid var(--b);flex:none}.ib.on{background:var(--a);color:var(--ak)}.ib.rec{background:var(--e);color:#fff}.ib svg,.pi svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.tw{flex:1;position:relative;display:flex;min-width:0}.tw textarea{padding-left:44px;width:100%}.ib.at{position:absolute;left:4px;bottom:4px;width:38px;height:38px;min-width:38px;border:0;background:none;color:var(--m);z-index:1}
-#pm,#ap{position:absolute;left:10px;bottom:calc(100% + 8px);background:var(--p);border:1px solid var(--b);border-radius:20px;padding:8px;box-shadow:0 12px 40px #0006;opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .18s,transform .18s;z-index:6}#pm{width:min(310px,calc(100% - 20px))}#ap{right:10px;max-height:46vh;overflow:auto}#pm.on,#ap.on{opacity:1;transform:none;pointer-events:auto}
-.mi{display:flex;align-items:center;gap:12px;width:100%;min-height:54px;padding:6px 10px;background:none;color:var(--t);border:0;border-radius:14px;text-align:left;font-weight:500}.mi:hover,.mi.sel{background:var(--p2)}.mi small{display:block;color:var(--m);font-weight:400;font-size:12px}
-.pi{width:40px;height:40px;border-radius:50%;background:var(--p2);display:flex;align-items:center;justify-content:center;flex:none;border:1px solid var(--b)}.mi.act .pi{background:var(--a);color:var(--ak);border-color:var(--a)}
-.pc{display:inline-flex;align-items:center;gap:8px;background:var(--p2);border:1px solid var(--b);border-radius:14px;padding:4px 6px 4px 4px;margin:0 6px 6px 0;max-width:100%;white-space:normal}.pc img{width:40px;height:40px;object-fit:cover;border-radius:10px}.pc .ft{width:40px;height:40px;border-radius:10px;background:var(--b);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}.pc .nm{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;padding:0 4px}.pc .sz{font-size:11px;color:var(--m);padding:0 4px}.pc button{min-height:28px;min-width:28px;width:28px;padding:0;border-radius:50%;background:var(--b);color:var(--t);display:inline-flex;align-items:center;justify-content:center}.pc button svg{width:14px;height:14px}
-#ts{display:flex;visibility:hidden;opacity:0;position:fixed;inset:0;background:#0008;z-index:19;align-items:flex-end;justify-content:center;transition:opacity .2s ease,visibility .2s}#ts.on{visibility:visible;opacity:1}
-.tsp{background:var(--p);width:min(620px,100%);border-radius:20px 20px 0 0;padding:0 16px calc(16px + env(safe-area-inset-bottom,0px));max-height:92%;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;transform:translateY(28px);transition:transform .26s cubic-bezier(.2,.8,.2,1)}#ts.on .tsp{transform:none}
-@media(min-width:700px){#ts{align-items:center}.tsp{border-radius:20px}}
-.tsh{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--p);padding:14px 0 12px}.tsh h3{margin:0;font-size:18px}.tsh .ib{width:48px;height:48px;min-width:48px}
-.tkb{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:4px 12px 4px 8px;border-radius:20px;background:var(--p2);color:var(--t);border:1px solid var(--b);font-weight:700}
-#ts .card{margin:0 0 12px;padding:14px}.tbal .tnum{font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}.tn{font-variant-numeric:tabular-nums;font-weight:600}
-.pk{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:360px){.pk{grid-template-columns:1fr}}
-.pkc{position:relative;background:var(--p2);border:1px solid var(--b);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:12px;transition:border-color .15s,transform .12s}.pkc:hover,.pkc.pop{border-color:var(--a)}.pkc:active{transform:scale(.985)}
-.pt{display:flex;flex-direction:column;gap:4px}
-.pkc .bdg{position:absolute;top:-8px;right:12px;background:var(--a);color:var(--ak);font-size:10.5px;font-weight:700;letter-spacing:.3px;padding:2px 8px;border-radius:10px;line-height:1.4}
-.pkc .am{font-weight:700;letter-spacing:.6px;font-size:12px;color:var(--m)}.pkc .pr{font-size:26px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}.pkc .idr{color:var(--m);font-size:13px;font-variant-numeric:tabular-nums}
-.pkc button{margin-top:auto;min-height:44px;transition:transform .12s,background .15s}.pkc button:active{transform:scale(.97)}
-@media(min-width:361px){.pkc.wide{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between}.pkc.wide button{margin-top:0;min-width:150px}}
-.tfn{margin:6px 0 0;font-size:11.5px;color:var(--m);opacity:.8;text-align:center}
-.bar{height:8px;border-radius:4px;background:var(--b);overflow:hidden}.bar i{display:block;height:100%;background:var(--a);transition:width .3s}
-#hd{position:relative}#tku{position:absolute;right:14px;top:calc(100% + 6px);z-index:8;background:var(--p);border:1px solid var(--b);border-radius:14px;padding:4px 10px;font-size:13px;font-weight:600;color:var(--a);font-variant-numeric:tabular-nums;opacity:0;transform:translateY(-6px);transition:opacity .35s ease,transform .25s ease;pointer-events:none;box-shadow:0 6px 18px #0004}#tku.on{opacity:1;transform:none}
-.tkb.pulse{animation:pls .5s ease}@keyframes pls{40%{transform:scale(1.05);border-color:var(--a)}}
+:root{
+  --bg:#090d13;
+  --panel:#101722;
+  --panel2:#171f2b;
+  --border:#273345;
+  --text:#edf3fa;
+  --muted:#8997aa;
+  --accent:#42dbc9;
+  --user:#1b3048;
+  --danger:#ff6f7d;
+}
+:root[data-theme="light"]{
+  --bg:#f3f6fa;
+  --panel:#fff;
+  --panel2:#edf1f6;
+  --border:#d4dce7;
+  --text:#151b25;
+  --muted:#607086;
+  --accent:#087f75;
+  --user:#dce9f7;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text)}
+body{font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,textarea,select{
+  font:inherit;
+  color:var(--text);
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:10px;
+}
+button{
+  cursor:pointer;
+  padding:10px 14px;
+}
+button.primary{
+  background:var(--accent);
+  color:#061815;
+  border:0;
+  font-weight:700;
+}
+button.secondary{background:var(--panel2)}
+button.danger{color:var(--danger)}
+input,textarea,select{padding:10px}
+textarea{resize:vertical}
+#app{
+  display:flex;
+  height:100dvh;
+  overflow:hidden;
+}
+#sidebar{
+  width:280px;
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:5px 4px;
+}
+.brand b{font-size:19px}
+.brand small{display:block;color:var(--muted)}
+#newChat{width:100%}
+#chatList{
+  flex:1;
+  overflow:auto;
+}
+.chatItem{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:10px;
+  border-radius:9px;
+  cursor:pointer;
+  margin-bottom:3px;
+}
+.chatItem:hover,.chatItem.active{background:var(--panel2)}
+.chatTitle{
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.chatDelete{
+  padding:3px 7px;
+  background:transparent;
+  border:0;
+  color:var(--muted);
+}
+#main{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+}
+#topbar{
+  height:58px;
+  flex:none;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 14px;
+  border-bottom:1px solid var(--border);
+  background:var(--panel);
+}
+#menuBtn{display:none}
+#page{
+  flex:1;
+  min-height:0;
+  overflow:auto;
+}
+.pageInner{
+  max-width:1000px;
+  width:100%;
+  margin:auto;
+  padding:18px;
+}
+#messages{
+  max-width:900px;
+  margin:auto;
+  padding:18px;
+}
+.message{
+  margin-bottom:16px;
+}
+.message.user{
+  display:flex;
+  justify-content:flex-end;
+}
+.bubble{
+  max-width:min(820px,100%);
+  padding:12px 15px;
+  border-radius:14px;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+.user .bubble{
+  background:var(--user);
+}
+.assistant .bubble{
+  background:var(--panel);
+  border:1px solid var(--border);
+}
+.meta{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+#composer{
+  border-top:1px solid var(--border);
+  background:var(--panel);
+  padding:10px;
+}
+.composeInner{
+  max-width:900px;
+  margin:auto;
+  display:flex;
+  gap:8px;
+  align-items:flex-end;
+}
+#prompt{
+  flex:1;
+  min-height:48px;
+  max-height:170px;
+}
+#send{
+  min-height:48px;
+}
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:15vh 20px;
+}
+.empty h1{color:var(--text)}
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:12px;
+}
+.row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.tabs{
+  display:flex;
+  gap:5px;
+  overflow-x:auto;
+  padding-bottom:8px;
+  position:relative;
+  z-index:20;
+}
+.tabs button{
+  flex:0 0 auto;
+  min-width:90px;
+  position:relative;
+  z-index:21;
+  touch-action:manipulation;
+}
+.tabs button.active{
+  background:var(--accent);
+  color:#061815;
+  border-color:var(--accent);
+  font-weight:700;
+}
+#labEditor{
+  width:100%;
+  min-height:420px;
+  font-family:ui-monospace,Consolas,monospace;
+  font-size:13px;
+  line-height:1.5;
+  background:#080c12;
+  color:#e7eef8;
+  border-radius:10px;
+  padding:14px;
+}
+#preview{
+  width:100%;
+  height:520px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:white;
+}
+.console{
+  min-height:300px;
+  background:#080c12;
+  color:#d8e5f2;
+  padding:12px;
+  border-radius:10px;
+  font-family:ui-monospace,Consolas,monospace;
+  white-space:pre-wrap;
+  overflow:auto;
+}
+.console .error{color:#ff7885}
+.console .warn{color:#f0c85c}
+.stat{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.statBox{
+  background:var(--panel2);
+  padding:14px;
+  border-radius:10px;
+}
+.statBox b{
+  display:block;
+  font-size:20px;
+}
+.setting{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.project{
+  padding:12px;
+  background:var(--panel2);
+  border-radius:10px;
+  margin-bottom:8px;
+}
+.project b{display:block}
+.project small{color:var(--muted)}
+#toast{
+  position:fixed;
+  left:50%;
+  bottom:85px;
+  transform:translateX(-50%);
+  background:var(--text);
+  color:var(--bg);
+  padding:9px 14px;
+  border-radius:20px;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+  z-index:100;
+}
+#toast.show{opacity:1}
+@media(max-width:760px){
+  #sidebar{
+    position:fixed;
+    inset:0 auto 0 0;
+    width:min(310px,84vw);
+    z-index:50;
+    transform:translateX(-105%);
+    transition:.2s;
+    box-shadow:20px 0 50px #0008;
+  }
+  #sidebar.open{transform:none}
+  #menuBtn{display:block}
+  #messages{padding:12px}
+  .pageInner{padding:12px}
+  .stat{grid-template-columns:1fr}
+}
+</style>
+</head>
 
-.lp{flex:1 0 auto}.lh{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}.lc{display:inline-flex;align-items:center;gap:6px;background:var(--p2);border:1px solid var(--b);border-radius:20px;padding:4px 12px;font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}.lc svg{width:16px;height:16px;color:var(--a)}
-.sg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.sc{background:var(--p);border:1px solid var(--b);border-radius:16px;padding:14px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;cursor:pointer;text-align:left;color:var(--t);min-height:130px;font-weight:500;transition:transform .12s,border-color .15s}.sc:active{transform:scale(.98)}.sc:hover{border-color:var(--a)}.sc>svg{width:26px;height:26px;color:var(--a)}.sc .bar{width:100%}
-.tr{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--b);border-radius:14px;background:var(--p);margin-bottom:8px;cursor:pointer;min-height:60px;transition:border-color .15s}.tr:hover{border-color:var(--a)}.tr .bar{margin-top:6px}
-.learn-choice{font:inherit;color:inherit;text-align:left;width:100%;appearance:none;-webkit-appearance:none;border:1px solid var(--b);cursor:pointer}
-.learn-choice:active{transform:scale(.99)}
+<body>
 
-.ln{position:sticky;bottom:0;z-index:5;display:flex;background:var(--p);border-top:1px solid var(--b);padding:4px 4px calc(4px + env(safe-area-inset-bottom,0px))}.ln button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:56px;padding:4px 2px;background:none;color:var(--m);border:0;font-size:11px;font-weight:600;border-radius:12px}.ln button.on{color:var(--a)}.ln svg{width:22px;height:22px}
-.opt{display:block;width:100%;text-align:left;min-height:52px;margin-bottom:8px;background:var(--p2);color:var(--t);border:1px solid var(--b);font-weight:500;white-space:pre-wrap}.opt.ok{border-color:var(--a);color:var(--a)}.opt.no{border-color:var(--e);color:var(--e)}
-.hint{background:var(--p2);border-left:3px solid var(--w);border-radius:8px;padding:8px 12px;margin:8px 0;font-size:14px}.fb{padding:10px 12px;border-radius:12px;margin:10px 0;background:var(--p2);border:1px solid var(--b)}.fb.ok{border-color:var(--a)}.fb.no{border-color:var(--e)}
-.tb{display:flex;gap:10px;align-items:flex-start}.av{width:38px;height:38px;border-radius:50%;background:var(--a);color:var(--ak);display:flex;align-items:center;justify-content:center;flex:none}.av svg{width:20px;height:20px}.bub{background:var(--p2);border:1px solid var(--b);border-radius:14px;padding:10px 14px;flex:1;min-width:0;overflow-wrap:anywhere}
-.dots2{display:flex;gap:6px;margin:8px 0}.dots2 i{flex:1;height:4px;border-radius:2px;background:var(--b)}.dots2 i.on{background:var(--a)}
-.chp{min-height:44px;padding:0 14px;border-radius:22px;background:var(--p2);color:var(--t);border:1px solid var(--b);font-weight:500}.chp.on{background:var(--a);color:var(--ak);border-color:var(--a)}
-.oc{display:inline-block;margin:0 6px 6px 0;padding:8px 12px;border-radius:12px;background:var(--p2);border:1px solid var(--b);color:var(--t);min-height:44px;font-weight:500;text-align:left}.oz{min-height:56px;border:1px dashed var(--b);border-radius:12px;padding:8px;margin-bottom:10px}
-.card{animation:fi .2s ease}@keyframes fi{from{opacity:.4;transform:translateY(4px)}}
-#ps{display:none;position:fixed;inset:0;background:#0008;z-index:18;align-items:flex-end;justify-content:center}#ps.on{display:flex}.sh2{background:var(--p);width:min(560px,100%);border-radius:20px 20px 0 0;padding:14px;max-height:80%;overflow:auto;animation:up .22s}@keyframes up{from{transform:translateY(40px);opacity:0}}
-#cp .ib{width:48px;height:48px;min-width:48px;max-width:48px;flex:0 0 48px;padding:0;border-radius:50%;aspect-ratio:1/1}#cp .ib.at{width:38px;height:38px;min-width:38px;max-width:38px;flex:none}#cp .tw textarea{min-height:48px}#cp>button:not(.ib){min-height:48px;border-radius:24px;padding:0 18px;flex:none}
-#cam{display:none;position:fixed;inset:0;background:#000d;z-index:25;align-items:center;justify-content:center;padding:10px}#cam.on{display:flex}.cmw{background:var(--p);border:1px solid var(--b);border-radius:20px;padding:12px;width:min(520px,100%);max-height:100%;display:flex;flex-direction:column;gap:10px}.cmw video,.cmw img{width:100%;max-height:62vh;object-fit:cover;border-radius:14px;background:#000}.cmw video[hidden],.cmw img[hidden]{display:none}
-#tst{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--t);color:var(--bg);padding:8px 14px;border-radius:20px;z-index:30;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90%;text-align:center;font-size:13px}#tst.on{opacity:1}
-.ch2{display:inline-flex;gap:6px;background:var(--p2);border:1px solid var(--b);border-radius:20px;padding:2px 10px;margin:0 6px 6px 0;font-size:12px}
-.card{background:var(--p);border:1px solid var(--b);border-radius:10px;padding:12px;margin-bottom:10px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row>*{flex:0 0 auto}.grow{flex:1!important;min-width:120px}
-.tabs{display:flex;gap:4px;overflow:auto;margin-bottom:8px}.tabs button{background:var(--p2);color:var(--t);border:1px solid var(--b)}.tabs button.on{background:var(--a);color:var(--ak)}
-.st{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:700;background:var(--p2)}.st.RUNNING{background:var(--w);color:#1d1400}.st.COMPLETED{background:var(--a);color:var(--ak)}.st.ERROR{background:var(--e);color:#fff}
-#modal{display:none;position:fixed;inset:0;background:#000a;align-items:center;justify-content:center;z-index:20;padding:14px}.mb{background:var(--p);border:1px solid var(--b);border-radius:12px;padding:16px;width:min(560px,100%);display:flex;flex-direction:column;gap:10px;max-height:90%}.mb .row{justify-content:flex-end}
-iframe{width:100%;height:68vh;min-height:420px;max-height:900px;border:1px solid var(--b);border-radius:8px;background:#fff}#pf.fs{position:fixed;inset:0;width:100%;height:100%;max-height:none;border:0;border-radius:0;z-index:15}#fx{display:none;position:fixed;right:12px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:16;opacity:.9}#fx.on{display:block}.mono{font:12px ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.log{padding:4px 0;border-bottom:1px solid var(--b)}.log.error{color:var(--e)}.log.warn{color:var(--w)}
-h2,h3,h4{margin:.6em 0 .3em}.emp{color:var(--m);text-align:center;margin:12vh auto 16px;max-width:460px}
-@media(max-width:760px){#sb{position:fixed;left:0;top:0;bottom:0;z-index:10;transform:translateX(-100%);transition:transform .25s ease;width:84%;max-width:320px}#sb.open{transform:none}#hb,#xb{display:inline-flex;align-items:center;justify-content:center}#bk{display:block;position:fixed;inset:0;background:#0009;z-index:9;opacity:0;pointer-events:none;transition:opacity .25s}#sb.open+#bk{opacity:1;pointer-events:auto}}
-</style></head><body>
-<div id="app"><aside id="sb"><div class="sh"><b id="br" style="font-size:18px">Vyrnexa AI</b><button class="ic" id="xb" data-a="close" aria-label="Close menu"><svg class="si" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><span class="mt">Intelligence, connected.</span><div id="nav"></div><button class="g" data-a="newc" style="display:flex;align-items:center;justify-content:center;gap:8px"><svg class="si" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New chat</button><input id="q" placeholder="Search conversations">
-<div id="list"></div><div class="mt" id="us"></div></aside><div id="bk" data-a="close"></div>
-<main id="mn"><div id="hd"><button class="g" id="hb" data-a="side" aria-label="Open menu"><svg class="si" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><b>Vyrnexa AI</b><span style="flex:1"></span><button class="tkb" id="tkb" data-a="store" aria-label="Token Store"></button><span id="tku" aria-live="polite"></span><button class="g" data-a="theme">Theme</button></div><div id="v"></div></main></div><div id="modal"></div><div id="ps"></div><div id="ts"></div><div id="tst"></div><div id="cam"><div class="cmw"><div class="row" style="justify-content:space-between"><b>Kamera</b><button class="ib" data-a="camx" aria-label="Close">X</button></div><video id="cvid" autoplay playsinline muted></video><img id="cimg" alt="" hidden><p id="cmsg" class="mt" hidden></p><div class="row" style="justify-content:center" id="cbtns"></div></div></div><input type="file" id="fcam" class="fin" accept="image/*" capture="environment" hidden><input type="file" id="fpho" class="fin" accept="image/*" multiple hidden><input type="file" id="ffil" class="fin" multiple accept=".pdf,.docx,.txt,.csv,.json,.zip,.html,.css,.js,.md,.png,.jpg,.jpeg,.webp" hidden>
+<div id="app">
+
+  <aside id="sidebar">
+    <div class="brand">
+      <div>
+        <b>Vyrnexa AI</b>
+        <small>Intelligence, connected.</small>
+      </div>
+      <button id="closeMenu">×</button>
+    </div>
+
+    <button class="primary" id="newChat">＋ New Chat</button>
+
+    <div id="chatList"></div>
+
+    <button class="secondary" id="clearChats">Clear Chats</button>
+  </aside>
+
+  <main id="main">
+
+    <header id="topbar">
+      <button id="menuBtn">☰</button>
+      <b id="pageTitle">Vyrnexa AI</b>
+      <span style="flex:1"></span>
+      <button id="themeBtn">Theme</button>
+    </header>
+
+    <section id="page"></section>
+
+    <footer id="composer">
+      <div class="composeInner">
+        <textarea id="prompt" placeholder="Ask Vyrnexa anything..."></textarea>
+        <button class="primary" id="send">Send</button>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<div id="toast"></div>
+
 <script>
-const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),sleep=n=>new Promise(r=>setTimeout(r,n)),uid=()=>Math.random().toString(36).slice(2,9);
-const LAB0={html:'<h1>Hello Vyrnexa</h1>\n<button onclick="hi()">Click</button>',css:'body{font-family:sans-serif;padding:16px}',js:'function hi(){console.log("clicked at "+new Date().toLocaleTimeString())}\nconsole.log("ready")'};
-let S={convs:[],mem:[],projects:[{id:'p0',name:'General',desc:'',notes:'',files:[]}],set:{theme:'dark',temp:0.7,lang:'auto',speed:18,sys:'You are Vyrnexa AI. Reply in the language of the latest user message; if mixed, use the dominant language. Never claim tools were used unless they were.'},cur:null,proj:'p0',lab:{...LAB0}};
-try{const x=JSON.parse(localStorage.getItem('nexus')||'null');if(x)S={...S,...x,set:{...S.set,...x.set}}}catch(e){}
-if(typeof S.set.sys==='string')S.set.sys=S.set.sys.replace(/NEXUS AI/g,'Vyrnexa AI');S.convs.forEach(c=>(c.msgs||[]).forEach(m=>{if(m.demo&&m.t)m.t=m.t.replace(/NEXUS( AI)?/g,'Vyrnexa AI')}));
-const save=()=>{try{localStorage.setItem('nexus',JSON.stringify(S))}catch(e){errs.push('Storage write failed')}};
-let V='chat',busy=false,ac=null,lastPrompt=[],errs=[],att=[],lim=40,L={tab:'html',logs:[],src:''},A={task:'',st:[],notes:[],run:false},MS={q:'',cat:'all'};
-const P=()=>S.projects.find(p=>p.id===S.proj)||S.projects[0],C=()=>S.convs.find(c=>c.id===S.cur);
-const ic=p=>'<svg viewBox="0 0 24 24">'+p+'</svg>',IC={chat:ic('<path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.3A8 8 0 1 1 21 12z"/>'),agent:ic('<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.5 6H12a3 3 0 0 1 3 3v.5M8.5 18H12a3 3 0 0 0 3-3v-.5"/>'),lab:ic('<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>'),files:ic('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>'),mem:ic('<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>'),proj:ic('<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'),set:ic('<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>'),dev:ic('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/>')};
-IC.learn=ic('<path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/>');IC.search=ic('<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/>');
-const NAV=[['chat','Chat'],['learn','Mode Belajar'],['search','Live Search'],['agent','Agent'],['lab','Coding Lab'],['files','Files'],['mem','Memory'],['proj','Projects'],['set','Settings']];
-// Developer access is command-only. Replace these IDs with your real Vyrnexa account IDs when auth is connected.
-const DEV_ACCOUNT_IDS=new Set(['dev-demo']);
-const CURRENT_ACCOUNT_ID='dev-demo';
-function isDeveloper(){return DEV_ACCOUNT_IDS.has(CURRENT_ACCOUNT_ID)}
-function openDevPanel(){if(!isDeveloper()){toast('Unknown command');return}S.set.dev=true;save();V='dev';draw()}
-function handleDevCommand(t){
-  const m=t.trim().match(/^\/dev(?:\s+(.*))?$/i);
-  if(!m)return false;
-  if(!isDeveloper()){toast('Unknown command');return true}
-  const arg=(m[1]||'').trim();
-  if(!arg){openDevPanel();return true}
-  const op=arg.match(/^([+-])\s*(\d+(?:\.\d+)?)$/);
-  if(op){const n=Math.floor(Number(op[2]));if(!Number.isFinite(n)||n<1){toast('Invalid token amount');return true}if(op[1]==='+')TK.add(n);else{const cur=TK.balance();const take=Math.min(cur,n);TK.spend(take);if(take<n){toast('Token balance reached 0')} }tkLog.push((op[1]==='+'?'+':'-')+n.toLocaleString('en-US')+' tokens');save();updTk();if(V==='dev')drawDev();else toast('Developer token change applied');return true}
-  if(/^reset\s+session$/i.test(arg)){S.cur=null;save();toast('Session reset');return true}
-  if(/^debug(?:\s+(on|off))?$/i.test(arg)){S.set.debug=!/\boff$/i.test(arg);save();toast('Debug mode '+(S.set.debug?'on':'off'));return true}
-  toast('Unknown dev command');return true
+const ENDPOINT =
+  "https://vyrnexa.r01304213.workers.dev/api/gemini";
+
+const DEFAULT_LAB = {
+  html:
+`<h1>Hello Vyrnexa</h1>
+<p>Welcome to Coding Lab.</p>
+<button onclick="hello()">Click me</button>`,
+
+  css:
+`body{
+  font-family:system-ui,sans-serif;
+  padding:30px;
+  background:#101722;
+  color:white;
 }
 
-async function copy(t){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();try{document.execCommand('copy')}catch(_){}a.remove()}}
-function ask(o){return new Promise(res=>{const m=$('#modal');m.innerHTML='<div class="mb"><h3></h3><p class="mt"></p>'+(o.field?(o.ml?'<textarea id="mi" rows="10"></textarea>':'<input id="mi">'):'')+'<div class="row"><button class="g" id="mc"></button>'+(o.extra?'<button class="g" id="mx"></button>':'')+'<button id="mo"></button></div></div>';
- m.querySelector('h3').textContent=o.title;m.querySelector('p').textContent=o.msg||'';$('#mc').textContent=o.ro?'Close':'Cancel';$('#mo').textContent=o.ok||'OK';if(o.extra)$('#mx').textContent=o.extra;
- const i=$('#mi');if(i){i.value=o.value||'';i.readOnly=!!o.ro}m.style.display='flex';const d=v=>{m.style.display='none';m.innerHTML='';res(v)};
- $('#mc').onclick=()=>d(null);$('#mo').onclick=()=>d(i?i.value:true);if(o.extra)$('#mx').onclick=()=>copy(i?i.value:'');})}
-/* ---- language detection: contextual scoring; slang/ambiguous input defaults to Indonesian and never counts as English ---- */
-const LEX_ID=new Set('yang dan di ke dari ini itu apa kabar kabarnya halo hai bagaimana gimana tolong buatkan buatin bikin bikinin jelasin jelaskan cariin carikan kasih beri aku saya kamu anda lu lo gue gw untuk buat dengan sama bisa dapat kenapa mengapa nggak ngga gak ga tidak bukan belum sudah udah lagi sedang adalah ada apakah apaan siapa dimana kapan berapa kalo kalau tapi tetapi atau juga mau pengen ingin biar supaya jangan sekarang nanti dulu kok kan lah dong sih nih deh banget aja saja cuma hanya terima makasih mantap yuk ayo ya iya enggak engga pagi siang sore malam selamat banyak sedikit semua lebih sangat sekali bagus kamu'.split(' '));
-const STR_ID=new Set('halo kabar kabarnya dong sih nih deh kok banget jelasin jelaskan tolong makasih terima apaan buatin bikinin cariin'.split(' '));
-const LEX_EN=new Set("the and is are was were of to in on at what how you your can please explain this that for with why do does did it its an my me we they he she them be been have has had not but or if when where who which will would should could about from by as so than then there here just like get make give show tell write create build need want help use using code thanks thank it's what's how's don't can't i'm".split(' '));
-const GREET_EN=new Set(['hello','hi','hey']);
-function detect(t){const w=String(t).toLowerCase().match(/[a-z']+/g)||[];let i=0,e=0;
- for(const x of w){if(LEX_ID.has(x))i+=STR_ID.has(x)?2:1;else if(x.length>4&&/nya$/.test(x))i+=1;else if(LEX_EN.has(x))e+=1;else if(GREET_EN.has(x))e+=.75}
- if(!i&&!e)return{l:'id',c:'neutral'};
- let l=e>i?'en':'id';if(l==='en'&&i>0&&e<i+1.5)l='id';
- return{l,c:(Math.max(i,e)>=2&&Math.abs(i-e)>=1.5)||((!i||!e)&&Math.max(i,e)>=1)?'strong':'weak'}}
-const lang=t=>detect(t).l;
-function langLabel(d){const n=d.l==='id'?'Indonesia':'English';return d.c==='manual'||d.c==='strong'?n:n+(d.l==='id'?' (netral/ambigu)':' (netral)')}
-function md(t){const bl=[];t=esc(t).replace(/```(\w*)\n?([\s\S]*?)```/g,(m,l,c)=>{bl.push('<div class="cb"><div class="ch"><span>'+(l||'code')+'</span><button data-a="cc">Copy</button></div><pre><code>'+c+'</code></pre></div>');return'\u0000'+(bl.length-1)+'\u0000'});
- t=t.replace(/`([^`\n]+)`/g,'<code>$1</code>').replace(/\*\*([^*\n]+)\*\*/g,'<b>$1</b>').replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<i>$2</i>').replace(/^#{2,3} (.*)$/gm,'<h3>$1</h3>').replace(/^# (.*)$/gm,'<h3>$1</h3>').replace(/^[-*] (.*)$/gm,'<li>$1</li>').replace(/(<li>.*<\/li>\n?)+/g,m=>'<ul>'+m.replace(/\n/g,'')+'</ul>').replace(/\n/g,'<br>');
- return t.replace(/\u0000(\d+)\u0000/g,(m,i)=>bl[i])}
-/* ---- provider layer: replace/add providers here to connect the real NEXUS backend ---- */
-function buildPrompt(c){return[{role:'system',content:S.set.sys},{role:'system',content:'Preferences: language='+S.set.lang+'; temperature='+S.set.temp},{role:'system',content:'Memory:\n'+(S.mem.map(m=>'['+m.cat+'] '+m.t).join('\n')||'(none)')},{role:'system',content:'Project: '+P().name+'\n'+P().notes},...searchLayer(),...metaLayer(),...c.msgs.map(m=>({role:m.r==='u'?'user':'assistant',content:m.t}))]}
-const GEMINI_ENDPOINT='https://vyrnexa.r01304213.workers.dev/api/gemini';
-const providers={gemini:{name:'Gemini API',connected:true,async*stream(msgs,ctx,ctl){
-  const payload={messages:msgs,temperature:Number(S.set.temp)||0.7,files:ctx.files||[],attachments:ctx.atts||[],meta:ctx.meta||[]};
-  const r=await fetch(GEMINI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload),signal:(ctl.signal||undefined)});
-  if(!r.ok){let msg='Gemini request failed ('+r.status+')';try{const j=await r.json();if(j.error)msg=j.error}catch(e){}throw Error(msg)}
-  const j=await r.json();
-  const text=String(j.text||j.output||'');
-  if(!text)throw Error('Gemini returned an empty response');
-  if(j.usage)yield {usage:j.usage};
-  for(const part of text.split(/(\s+)/)){if(ctl.stop)return;yield part;await sleep(+S.set.speed)}
-}}};
-async function gen(c){busy=true;ac={stop:false,cap:false};const m={r:'a',t:'',ts:Date.now(),demo:true};c.msgs.push(m);lastPrompt=buildPrompt(c);
- const files=att.map(id=>P().files.find(f=>f.id===id)).filter(Boolean).concat(pf),inTok=TK.est(lastU(c)+pf.map(f=>f.text).join('')),cap=TK.avail()-inTok;let usage=null,failed=false;drawChat();
- try{for await(const ch of providers.gemini.stream(lastPrompt,{files,meta:curMeta,atts:curAtt},ac)){
-   if(ch&&typeof ch==='object'){if(ch.usage)usage=ch.usage;continue}
-   m.t+=ch;if(TK.est(m.t)>cap){ac.cap=true;ac.stop=true}const n=$('.live');if(n){n.innerHTML=md(m.t);$('#ms').scrollTop=1e9}}}
- catch(e){failed=true;errs.push(e.message);m.t+=(m.t?'\n\n':'')+'Error: '+e.message}
- /* bill exactly once, only for a completed request (not on error or user cancel) */
- if(!failed&&m.t.trim()&&(!ac.stop||ac.cap))chargeAI(inTok,TK.est(m.t),usage);
- busy=false;if(!m.t.trim())c.msgs.pop();c.ts=Date.now();att=[];pf=[];curMeta=[];curAtt=[];save();drawChat();drawList()}
-function ensure(){if(!C())H.newc();return C()}
-async function send(t){t=(t||'').trim();if(busy||(!t&&!pend.length))return;if(t&&handleDevCommand(t))return;if(!await guard(t+pend.map(a=>a.text||'').join('')))return;const c=ensure(),meta=metaList(),m={r:'u',t:t||'(lampiran)',ts:Date.now()};
- if(pend.length)m.att=pend.map(a=>({name:a.name,type:a.type,size:a.size,kind:a.kind,thumb:a.thumb}));if(meta.length)m.meta=meta.join(' · ');
- pf=pend.filter(a=>a.text).map(a=>({name:a.name,text:a.text}));curMeta=meta;curAtt=m.att||[];reqMeta=requestMeta();c.msgs.push(m);pend=[];deep=false;cmd=null;
- if(c.title==='New chat')c.title=m.t.slice(0,40);await gen(c)}
-const fmt=ts=>new Date(ts).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-function drawChat(){const c=C();let h='';
- if(!c||!c.msgs.length)h='<div class="emp"><h2>How can Vyrnexa AI help?</h2><p>Ask anything, attach files, or type @ for commands.</p><div class="row" style="justify-content:center">'+['halo, apa kabar?','Explain what an API is','jelasin what is an API dong','Make an HTML button example'].map(s=>'<button class="g" data-a="sug" data-s="'+esc(s)+'">'+esc(s)+'</button>').join('')+'</div></div>';
- else{const ms=c.msgs,st=Math.max(0,ms.length-lim);if(st)h+='<div class="mw"><button class="g" data-a="more">Load earlier messages</button></div>';
-  ms.slice(st).forEach((m,k)=>{const i=k+st,last=i===ms.length-1,live=busy&&last&&m.r==='a';
-   h+='<div class="mw"><div class="m '+m.r+'">'+(m.r==='u'?(m.att?attRow(m.att):'')+esc(m.t)+(m.meta?'<div class="mt">'+esc(m.meta)+'</div>':''):'<div class="'+(live?'live':'')+'">'+(m.t?md(m.t):'<span class="dots"><span></span><span></span><span></span></span>')+'</div>')+'</div><div class="ma"><span>'+fmt(m.ts)+''+'</span>'+(live?'':'<button data-a="copy" data-i="'+i+'">Copy</button>'+(m.r==='u'?'<button data-a="edit" data-i="'+i+'">Edit</button>':'')+(m.r==='a'&&last?'<button data-a="regen">Regenerate</button>':''))+'</div></div>'})}
- const ph=P().files,at=att.map(id=>{const f=ph.find(x=>x.id===id);return f?'<span class="ch2">'+esc(f.name)+'<a data-a="det" data-i="'+id+'" style="cursor:pointer">x</a></span>':''}).join('');
- $('#v').innerHTML='<div id="ms">'+h+'</div><div id="pv" style="padding:0 10px">'+at+'<span id="pw">'+pvx()+'</span></div><div id="cp">'+cpHead()+'<div class="tw"><button class="ib at" data-a="atbtn" aria-label="Commands">'+CI.at+'</button><textarea id="in" rows="1" placeholder="Message Vyrnexa AI"></textarea></div><button class="ib" id="mic" data-a="mic" aria-label="Voice input">'+CI.mic+'</button>'+(busy?'<button data-a="stop">Stop</button>':'<button data-a="send">Send</button>')+'</div>';
- $('#ms').scrollTop=1e9;const ta=$('#in');ta.onkeydown=e=>{if(atKey(e))return;if(e.key==='Enter'&&!e.shiftKey&&innerWidth>760){e.preventDefault();send(ta.value)}};ta.oninput=()=>{ta.style.height='auto';ta.style.height=Math.min(160,ta.scrollHeight)+'px';atCheck()}}
-function drawList(){const q=$('#q').value.toLowerCase();$('#list').innerHTML=S.convs.filter(c=>!q||c.title.toLowerCase().includes(q)||c.msgs.some(m=>m.t.toLowerCase().includes(q))).sort((a,b)=>b.ts-a.ts).map(c=>'<div class="ci'+(c.id===S.cur?' on':'')+'" data-a="open" data-i="'+c.id+'"><span class="tt">'+esc(c.title)+'</span><button class="ic" data-a="ren" data-i="'+c.id+'">Edit</button><button class="ic" data-a="del" data-i="'+c.id+'">Del</button></div>').join('')||'<div class="mt" style="padding:8px">No conversations yet.</div>';
- const n=S.convs.reduce((a,c)=>a+c.msgs.length,0),ch=S.convs.reduce((a,c)=>a+c.msgs.reduce((x,m)=>x+m.t.length,0),0);$('#us').textContent=''}
-function draw(){document.documentElement.dataset.theme=S.set.theme;updTk();$('#nav').innerHTML=NAV.filter(n=>n[0]!=='dev'||S.set.dev).map(n=>'<button class="'+(V===n[0]?'on':'')+'" data-a="nav" data-i="'+n[0]+'">'+IC[n[0]]+'<span>'+n[1]+'</span></button>').join('');drawList();
- ({chat:drawChat,learn:drawLearn,search:drawSearch,agent:drawAgent,lab:drawLab,files:drawFiles,mem:drawMem,proj:drawProj,set:drawSet,dev:drawDev})[V]()}
-/* ---- views ---- */
-const wrap=h=>$('#v').innerHTML='<div class="pg">'+h+'</div>';
-function drawMem(){const l=S.mem.filter(m=>(MS.cat==='all'||m.cat===MS.cat)&&m.t.toLowerCase().includes(MS.q.toLowerCase())),cats=['preference','fact','project','context','instruction'];
- wrap('<h2>Memory</h2><p class="mt">Stored in this browser only. Added to the prompt context on every request.</p><div class="card row"><select id="mc2">'+cats.map(c=>'<option>'+c+'</option>').join('')+'</select><input class="grow" id="mt2" placeholder="New memory"><button data-a="madd">Add</button></div><div class="row" style="margin-bottom:10px"><input class="grow" id="ms2" placeholder="Search memory" value="'+esc(MS.q)+'"><select id="mf"><option value="all">all</option>'+cats.map(c=>'<option'+(MS.cat===c?' selected':'')+'>'+c+'</option>').join('')+'</select><button class="g" data-a="mclr">Clear all</button></div>'+
- (l.map(m=>'<div class="card"><span class="st">'+m.cat+'</span> '+esc(m.t)+'<div class="row" style="margin-top:6px"><button class="g" data-a="medit" data-i="'+m.id+'">Edit</button><button class="g" data-a="mdel" data-i="'+m.id+'">Delete</button></div></div>').join('')||'<p class="mt">No memory entries.</p>'));
- $('#ms2').oninput=e=>{MS.q=e.target.value;drawMem();const i=$('#ms2');i.focus();i.setSelectionRange(99,99)};$('#mf').onchange=e=>{MS.cat=e.target.value;drawMem()}}
-function drawProj(){wrap('<h2>Projects</h2><div class="card row"><input class="grow" id="pn" placeholder="Project name"><input class="grow" id="pd" placeholder="Description"><button data-a="padd">Create</button></div>'+S.projects.map(p=>'<div class="card"><b>'+esc(p.name)+'</b> '+(p.id===S.proj?'<span class="st COMPLETED">ACTIVE</span>':'')+'<div class="mt">'+esc(p.desc)+' · '+p.files.length+' files · '+S.convs.filter(c=>c.proj===p.id).length+' conversations</div><div class="row" style="margin-top:6px">'+(p.id!==S.proj?'<button data-a="psw" data-i="'+p.id+'">Switch</button>':'')+(S.projects.length>1?'<button class="g" data-a="pdel" data-i="'+p.id+'">Delete</button>':'')+'</div></div>').join('')+'<h3>Notes for "'+esc(P().name)+'" (project memory)</h3><textarea id="notes" rows="6" placeholder="Notes included in the prompt context">'+esc(P().notes)+'</textarea>')}
-function an(f){const l=f.text.split('\n').length,w=(f.text.match(/\S+/g)||[]).length;let x=l+' lines, '+w+' words, '+f.text.length+' chars';if(f.type==='json'){try{JSON.parse(f.text);x+='; valid JSON'}catch(e){x+='; invalid JSON'}}if(f.type==='csv'){const r=f.text.trim().split('\n');x+='; '+r.length+' rows, '+r[0].split(',').length+' columns'}return x}
-function drawFiles(){const fs=P().files;wrap('<h2>Files</h2><p class="mt">Files are read locally in your browser (TXT, JSON, CSV, HTML, CSS, JS, MD; max 500 KB). Attaching a file adds its text to the next message context. Local statistics are not AI analysis.</p><div class="card"><input type="file" id="fi" multiple accept=".txt,.json,.csv,.html,.css,.js,.md"></div>'+
- (fs.map(f=>'<div class="card"><b>'+esc(f.name)+'</b><div class="mt">'+(f.size/1024).toFixed(1)+' KB · '+f.type+' · '+esc(an(f))+'</div><pre class="mono" style="max-height:140px">'+esc(f.text.slice(0,800))+'</pre><div class="row"><button data-a="fatt" data-i="'+f.id+'">'+(att.includes(f.id)?'Attached':'Attach to chat')+'</button><button class="g" data-a="fdel" data-i="'+f.id+'">Remove</button></div></div>').join('')||'<p class="mt">No files in this project.</p>'));
- $('#fi').onchange=async e=>{for(const f of e.target.files){const t=(f.name.split('.').pop()||'').toLowerCase();if(!['txt','json','csv','html','css','js','md'].includes(t)){await ask({title:'Unsupported file',msg:f.name+' is not a supported type.',ro:1});continue}if(f.size>512000){await ask({title:'File too large',msg:f.name+' exceeds 500 KB.',ro:1});continue}
-  try{P().files.push({id:uid(),name:f.name,size:f.size,type:t,text:(await f.text()).slice(0,200000)})}catch(x){errs.push('Upload failed: '+f.name)}}save();drawFiles()}}
-function drawSet(){wrap('<h2>Settings</h2><div class="card"><label>Temperature: <span id="tv">'+S.set.temp+'</span></label><input type="range" min="0" max="1" step="0.1" data-k="temp" value="'+S.set.temp+'" style="width:100%"><p></p><label>Language mode</label><select data-k="lang">'+['auto','id','en'].map(x=>'<option'+(S.set.lang===x?' selected':'')+'>'+x+'</option>').join('')+'</select><p></p><label>Response speed delay (ms)</label><input type="number" data-k="speed" min="0" max="200" value="'+S.set.speed+'"><p></p><label>System prompt</label><textarea rows="5" data-k="sys">'+esc(S.set.sys)+'</textarea></div><div class="card row"><button data-a="theme">Toggle theme</button><button class="g" data-a="exp">Export data</button><button class="g" data-a="imp">Import data</button><button class="g" data-a="wipe">Erase all data</button></div>')}
-function drawDev(){const sz=(localStorage.getItem('nexus')||'').length;const nl='\n';wrap('<h2>Developer</h2><div class="card"><b>Web search provider</b><p class="mt">URL of a search endpoint on your own backend (GET ?q=&amp;freshness=&amp;limit=, returns JSON with a "results" array). Leave empty for NOT CONNECTED. Keep API keys on that backend.</p><input data-k="searchUrl" placeholder="/api/search" value="'+esc(S.set.searchUrl||'')+'"></div><div class="card"><b>Learning leaderboard provider</b><p class="mt">Server endpoint for the global Mode Belajar leaderboard. The server must validate answers and calculate Stars; never trust a client-supplied Stars total.</p><input data-k="learnLeaderboardUrl" placeholder="/api/learn/leaderboard" value="'+esc(S.set.learnLeaderboardUrl||'')+'"><button data-a="lbrefresh" style="margin-top:8px">Test / Refresh leaderboard</button></div><div class="card mono">Tokens: '+esc(JSON.stringify({bal:TK.balance(),daily:TK.daily()})+nl+tkLog.join(nl))+'</div><div class="card mono">Provider: Gemini API (backend endpoint: /api/gemini)'+nl+'Quota: not enforced'+nl+'Storage: '+(sz/1024).toFixed(1)+' KB of localStorage'+nl+'Conversations: '+S.convs.length+' · Memory: '+S.mem.length+' · Projects: '+S.projects.length+'</div><h3>Last assembled prompt</h3><div class="card mono">'+(esc(JSON.stringify(lastPrompt,null,1))||'none')+'</div><h3>Error log</h3><div class="card mono">'+(errs.slice(-30).map(esc).join(nl)||'No errors')+'</div>')}
-/* ---- Live Search: provider-agnostic. Real results only come from the configured endpoint; nothing is generated locally. ---- */
-let SR={q:'',mode:'auto',results:[],busy:false};
-const FRESH=/terbaru|latest|today|hari ini|sekarang|\bbaru\b|viral|news|berita|update|trending|current|\bnow\b|barusan|this week|minggu ini/i;
-function fresh(q){const y=(q.match(/\b(19|20)\d\d\b/g)||[]).map(Number);if(y.some(v=>v<new Date().getFullYear())||/sejarah|history|dulu|dahulu/i.test(q))return'historical';return FRESH.test(q)?'current':'any'}
-const intentTxt=()=>'';
-const okUrl=u=>/^https?:\/\//i.test(u||''),T=(v,n)=>v==null?'':String(v).slice(0,n||400);
-const normR=r=>({title:T(r.title,200),summary:T(r.summary,600),source:T(r.source,100),url:T(r.url,500),date:T(r.date,40),status:T(r.status,30),item:r.item&&typeof r.item==='object'?{name:T(r.item.name,100),id:T(r.item.id,30),status:T(r.item.status,60),link:T(r.item.link,500)}:null});
-async function webSearch(q,mode){const u=S.set.searchUrl;if(!u)return{connected:false};const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),15000);
- try{const r=await fetch(u+(u.includes('?')?'&':'?')+'q='+encodeURIComponent(q)+'&freshness='+mode+'&limit=8',{signal:ctl.signal});if(!r.ok)throw Error('Search provider error '+r.status);const j=await r.json();if(!Array.isArray(j.results))throw Error('Invalid response: "results" array missing');return{connected:true,results:j.results.slice(0,8).map(normR),at:Date.now()}}
- catch(e){errs.push('Search: '+e.message);return{connected:true,error:e.name==='AbortError'?'Search timed out.':/fetch|network/i.test(e.message)?'Could not reach the search endpoint. A published page cannot call other sites; use a backend on the same origin.':e.message}}finally{clearTimeout(to)}}
-function searchLayer(){if(!SR.results.length)return[];return[{role:'system',content:'LIVE SEARCH RESULTS (fetched '+new Date(SR.at).toISOString()+', mode '+SR.used+') for "'+SR.q+'":\n'+JSON.stringify(SR.results)+'\nRules: use only these results for current facts; cite source names with URLs and publication dates; label rumors/claims as unconfirmed; never invent IDs, URLs or dates; if results do not answer the question say so. For Roblox items answer as Item Name / Item ID / Status / Roblox Link / Source / Last updated. Reply in the language of the user. Light humor is fine in casual chats but never alters facts.'}]}
-function age(d){const t=Date.parse(d);if(!t)return'date unknown';const h=(Date.now()-t)/36e5;return h<24?'fresh (<24h)':h<168?'recent (<7d)':'older'}
-function rcard(r){const L=(k,v)=>k+': '+(v||'not provided');return'<div class="card">'+(okUrl(r.url)?'<a href="'+esc(r.url)+'" target="_blank" rel="noopener noreferrer"><b>'+esc(r.title||r.url)+'</b></a>':'<b>'+esc(r.title||'Untitled')+'</b>')+' <span class="st">'+age(r.date)+'</span>'+(r.status?' <span class="st">'+esc(r.status)+'</span>':'')+'<p>'+esc(r.summary)+'</p><div class="mt">'+esc(r.source||'source unknown')+' · '+esc(r.date||'date unknown')+'</div>'+(okUrl(r.url)?'<div class="mt mono">'+esc(r.url)+'</div>':'')+
- (r.item?'<pre class="mono">'+esc([L('Item Name',r.item.name),L('Item ID',r.item.id),L('Status',r.item.status),L('Roblox Link',r.item.link),L('Source',r.source),L('Last updated/fetched',r.date||new Date(SR.at).toISOString())].join('\n'))+'</pre>':'')+'</div>'}
-function drawSearch(){let b='';
- if(SR.busy)b='<p class="mt">Searching...</p>';else if(SR.nc)b='<div class="card"><b>Live Search is coming soon</b><p class="mt">Web search is not available yet.</p></div>';
- else if(SR.err)b='<div class="card"><span class="st ERROR">ERROR</span><p>'+esc(SR.err)+'</p><button class="g" data-a="sgo">Retry</button></div>';
- else if(SR.done)b=(SR.results.length?'<p class="mt">Fetched '+esc(new Date(SR.at).toLocaleString())+' · mode '+esc(SR.used)+' · '+SR.results.length+' results</p>'+SR.results.map(rcard).join('')+'<button data-a="sch">Ask Vyrnexa AI about these results</button>':'<p class="mt">The provider returned no results.</p>');
- wrap('<h2>Live Search</h2>'+(S.set.searchUrl?'<p class="mt">Provider endpoint is set. Results are fetched live from it.</p>':'<div class="card"><b>Live Search is coming soon</b><p class="mt">Web search is not available yet.</p></div>')+
- '<div class="row"><input class="grow" id="sq" placeholder="Search the web" value="'+esc(SR.q)+'"><select id="sm">'+['auto','current','historical','any'].map(x=>'<option'+(SR.mode===x?' selected':'')+'>'+x+'</option>').join('')+'</select><button data-a="sgo">Search</button></div><p class="mt" id="si">'+esc(intentTxt())+'</p>'+b);
- $('#sq').onkeydown=e=>{if(e.key==='Enter')H.sgo()}}
-const ST=['Goal','Planning','Execution','Testing','Final Result'];
-function drawAgent(){wrap('<h2>Agent workflow</h2><p class="mt">Goal → Planning → Execution → Testing → Final Result. Steps marked DEMO are simulated: no AI model or external tool runs yet. Testing performs a real syntax check of the Coding Lab JavaScript.</p><textarea id="task" rows="3" placeholder="Describe a task">'+esc(A.task)+'</textarea><div class="row" style="margin:8px 0">'+(A.run?'<button data-a="astop">Stop</button>':'<button data-a="arun">Run workflow</button>')+'</div>'+ST.map((s,i)=>'<div class="card"><b>'+s+'</b> <span class="st '+(A.st[i]||'WAITING')+'">'+(A.st[i]||'WAITING')+'</span>'+(i==1||i==2?' <span class="st">DEMO</span>':'')+'<div class="mt">'+esc(A.notes[i]||'')+'</div></div>').join(''))}
-async function arun(){if(!A.task.trim())return;A.run=true;A.stop=false;A.st=[];A.notes=[];const N=[()=>'Goal captured ('+A.task.length+' chars): '+A.task.slice(0,80),()=>'DEMO: no real plan generated. Context available: project '+P().name+', '+P().files.length+' files, '+S.mem.length+' memory entries.',()=>'DEMO: real tool execution is unavailable; nothing was run. Coding Lab holds '+S.lab.js.length+' chars of JavaScript.',()=>{try{new Function(S.lab.js);return'Real check: Coding Lab JavaScript has valid syntax (not executed).'}catch(e){A.st[3]='ERROR';return'Real check failed: '+e.message}},()=>'Workflow finished. Steps marked DEMO did not use a model or tools; Testing was a real syntax check.'];
- for(let i=0;i<5;i++){A.st[i]='RUNNING';if(V==='agent')drawAgent();await sleep(800);if(A.stop){A.st[i]='ERROR';A.notes[i]='Stopped by user';break}const n=N[i]();if(A.st[i]!=='ERROR')A.st[i]='COMPLETED';A.notes[i]=n}A.run=false;if(V==='agent')drawAgent()}
-function drawLab(){const T=['html','css','js','console','preview'],nm={html:'HTML',css:'CSS',js:'JavaScript',console:'Console',preview:'Preview'};
- const editor=['html','css','js'].includes(L.tab);
- let body=editor?'<textarea id="ed" rows="16" spellcheck="false" class="mono"></textarea>':L.tab==='console'?'<div class="card mono" style="min-height:200px">'+(L.logs.map(l=>'<div class="log '+l.t+'">'+esc(l.t+': '+l.m)+'</div>').join('')||'Console is empty. Press Run.')+'</div>':'<iframe id="pf" sandbox="allow-scripts" title="Preview"></iframe><button id="fx" class="g" data-a="lfs">Exit fullscreen</button>';
- if(editor&&L.src) body+='<div class="card" style="margin-top:10px"><div class="row" style="justify-content:space-between"><b>Live Preview</b><button class="g" data-a="lfs">Fullscreen</button></div><iframe id="pf" sandbox="allow-scripts" title="Live Preview"></iframe></div>';
- wrap('<h2>Coding Lab</h2><div class="tabs">'+T.map(t=>'<button class="'+(L.tab===t?'on':'')+'" data-a="ltab" data-i="'+t+'">'+nm[t]+'</button>').join('')+'</div>'+body+
- '<div class="row" style="margin-top:8px"><button data-a="lrun">Run</button><button class="g" data-a="lstop">Stop</button><button class="g" data-a="lreset">Reset</button><button class="g" data-a="lfs">Fullscreen</button><button class="g" data-a="ldl">Download</button><button class="g" data-a="lsave">Save to project</button></div>');
- const ed=$('#ed');if(ed){ed.value=S.lab[L.tab];ed.oninput=()=>{S.lab[L.tab]=ed.value;save()}}const pf=$('#pf');if(pf)pf.srcdoc=L.src}
-const labDoc=()=>'<!doctype html><html><head><meta charset="utf-8"><style>'+S.lab.css+'</style></head><body>'+S.lab.html+'<script>(function(){var p=function(t,a){parent.postMessage({nx:1,t:t,m:[].map.call(a,String).join(" ")},"*")};["log","warn","error","info"].forEach(function(k){var o=console[k];console[k]=function(){p(k,arguments);o.apply(console,arguments)}});onerror=function(m,s,l){p("error",[m+" (line "+l+")"])}})()<\/script><script>'+S.lab.js+'<\/script></body></html>';
-addEventListener('message',e=>{if(e.data&&e.data.nx){L.logs.push({t:e.data.t,m:e.data.m});if(V==='lab'&&L.tab==='console')drawLab()}});
-/* ---- actions ---- */
-const H={close(){$('#sb').classList.remove('open')},side(){$('#sb').classList.toggle('open')},theme(){S.set.theme=S.set.theme==='dark'?'light':'dark';save();draw()},nav(el){V=el.dataset.i;$('#sb').classList.remove('open');draw()},
- newc(){const c={id:uid(),title:'New chat',msgs:[],ts:Date.now(),proj:S.proj};S.convs.push(c);S.cur=c.id;V='chat';save();$('#sb').classList.remove('open');draw()},
- open(el){S.cur=el.dataset.i;V='chat';lim=40;$('#sb').classList.remove('open');draw()},
- async ren(el){const c=S.convs.find(x=>x.id===el.dataset.i),t=await ask({title:'Rename conversation',field:1,value:c.title});if(t){c.title=t.slice(0,80);save();drawList()}},
- async del(el){if(await ask({title:'Delete conversation?',msg:'This cannot be undone.',ok:'Delete'})){S.convs=S.convs.filter(x=>x.id!==el.dataset.i);if(S.cur===el.dataset.i)S.cur=null;save();draw()}},
- send(){send($('#in').value)},stop(){if(ac)ac.stop=true},sug(el){send(el.dataset.s)},more(){lim+=40;drawChat()},
- copy(el){copy(C().msgs[el.dataset.i].t)},cc(el){copy(el.closest('.cb').querySelector('code').textContent);el.textContent='Copied';setTimeout(()=>el.textContent='Copy',1200)},
- async edit(el){const c=C(),i=+el.dataset.i;if(busy)return;const t=await ask({title:'Edit message',field:1,ml:1,value:c.msgs[i].t,ok:'Resend'});if(t&&t.trim()){if(!await guard(t))return;c.msgs=c.msgs.slice(0,i);c.msgs.push({r:'u',t:t.trim(),ts:Date.now()});await gen(c)}},
- async regen(){const c=C();if(busy||!c)return;if(!await guard(lastU(c)))return;if(c.msgs[c.msgs.length-1].r==='a')c.msgs.pop();await gen(c)},
- det(el){att=att.filter(x=>x!==el.dataset.i);drawChat()},fatt(el){const i=el.dataset.i;if(!att.includes(i))att.push(i);drawFiles()},
- fdel(el){P().files=P().files.filter(f=>f.id!==el.dataset.i);att=att.filter(x=>x!==el.dataset.i);save();drawFiles()},
- madd(){const t=$('#mt2').value.trim();if(t){S.mem.push({id:uid(),cat:$('#mc2').value,t:t.slice(0,500)});save();drawMem()}},
- async medit(el){const m=S.mem.find(x=>x.id===el.dataset.i),t=await ask({title:'Edit memory',field:1,value:m.t});if(t){m.t=t;save();drawMem()}},
- mdel(el){S.mem=S.mem.filter(x=>x.id!==el.dataset.i);save();drawMem()},async mclr(){if(await ask({title:'Clear all memory?',ok:'Clear'})){S.mem=[];save();drawMem()}},
- padd(){const n=$('#pn').value.trim();if(n){const p={id:uid(),name:n.slice(0,60),desc:$('#pd').value.slice(0,200),notes:'',files:[]};S.projects.push(p);S.proj=p.id;save();drawProj()}},
- psw(el){S.proj=el.dataset.i;att=[];save();drawProj()},async pdel(el){if(await ask({title:'Delete project?',msg:'Its files and notes are removed.',ok:'Delete'})){S.projects=S.projects.filter(p=>p.id!==el.dataset.i);if(S.proj===el.dataset.i)S.proj=S.projects[0].id;save();drawProj()}},
- arun,astop(){A.stop=true},async sgo(){const q=SR.q.trim();if(!q||SR.busy)return;const md=SR.mode==='auto'?fresh(q):SR.mode;SR.busy=true;SR.err=null;SR.nc=false;SR.results=[];SR.done=false;drawSearch();const r=await webSearch(q,md);SR.busy=false;if(!r.connected)SR.nc=true;else if(r.error)SR.err=r.error;else{SR.results=r.results;SR.at=r.at;SR.used=md;SR.done=true}if(V==='search')drawSearch()},sch(){V='chat';draw();send(SR.q)},ltab(el){L.tab=el.dataset.i;drawLab()},
- lrun(){L.logs=[];L.src=labDoc();drawLab()},lfs(){if(!$('#pf')){L.tab='preview';drawLab()}const f=$('#pf'),on=f.classList.toggle('fs');$('#fx').classList.toggle('on',on)},lstop(){L.src='';L.logs.push({t:'warn',m:'Preview stopped'});drawLab()},lreset(){S.lab={...LAB0};L.src='';L.logs=[];save();drawLab()},
- ldl(){ask({title:'Project file (copy and save as .html)',field:1,ml:1,value:labDoc(),ro:1,extra:'Copy'})},
- lsave(){const f={id:uid(),name:'lab-'+new Date().toISOString().slice(0,16).replace(/\D/g,'')+'.html',size:labDoc().length,type:'html',text:labDoc()};P().files.push(f);save();ask({title:'Saved',msg:f.name+' added to project "'+P().name+'" files.',ro:1})},
- exp(){const o={nexus:1,convs:S.convs,mem:S.mem,projects:S.projects,set:S.set,lab:S.lab};ask({title:'Export (copy JSON)',field:1,ml:1,ro:1,value:JSON.stringify(o),extra:'Copy'})},
- async imp(){const t=await ask({title:'Import Vyrnexa AI data',msg:'Paste exported JSON. This replaces current data.',field:1,ml:1,ok:'Import'});if(!t)return;try{const o=JSON.parse(t);if(!o.nexus||!Array.isArray(o.convs)||!Array.isArray(o.projects)||!o.projects.length)throw Error('Not a Vyrnexa AI export');S={...S,convs:o.convs,mem:o.mem||[],projects:o.projects,set:{...S.set,...o.set},lab:o.lab||S.lab,cur:null,proj:o.projects[0].id};save();draw()}catch(e){ask({title:'Import failed',msg:e.message,ro:1})}},
- async wipe(){if(await ask({title:'Erase all Vyrnexa AI data?',msg:'Conversations, memory, projects and settings are deleted.',ok:'Erase'})){try{localStorage.removeItem('nexus')}catch(e){}location.reload()}}};
-/* ---- token layer: localStorage prototype. In production replace TK internals with server calls; never trust the client for balances. ---- */
-const TK=(()=>{const KEY='vyr_tokens',DAY=864e5,DAILY=20000,START=10000;let st=null;
- const read=()=>{try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);if(o&&typeof o.bal==='number')return o}}catch(e){}return null};
- const write=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
- const norm=()=>{st.bal=Math.max(0,Math.floor(+st.bal||0));st.used=Math.max(0,+st.used||0);st.resetAt=+st.resetAt||Date.now()+DAY;if(Date.now()>=st.resetAt){st.used=0;st.resetAt=Date.now()+DAY;write()}};
- st=read();if(st){norm()}else{st={bal:START,used:0,resetAt:Date.now()+DAY};write()}
- return{sync(){const o=read();if(o)st=o;norm()},balance(){this.sync();return st.bal},
-  daily(){this.sync();return{limit:DAILY,left:Math.max(0,DAILY-st.used),resetIn:Math.max(0,st.resetAt-Date.now())}},
-  avail(){const d=this.daily();return d.left+st.bal},canSpend(n){return this.avail()>=n},
-  spend(n){n=Math.max(0,Math.floor(n));this.sync();const d=Math.min(n,Math.max(0,DAILY-st.used)),p=Math.min(n-d,st.bal);st.used+=d;st.bal-=p;write();return{daily:d,paid:p,short:n-d-p}},
-  add(n){this.sync();st.bal+=Math.max(0,Math.floor(n));write()},est:t=>{t=String(t||'');if(!t)return 0;const w=(t.match(/\S+/g)||[]).length;return Math.max(1,Math.ceil(Math.max(t.length/4,w*1.3)))}}})();
-/* single entry point for ANY real AI request (chat, generate code, fix with AI, ask AI): guard() before, chargeAI() once after success */
-const tkLog=[];
-function chargeAI(inTok,outTok,u){let tot=inTok+outTok,src='estimate';if(u){const t=+u.total_tokens||((+u.prompt_tokens||0)+(+u.completion_tokens||0));if(t>0){tot=t;src='provider'}}
- const r=TK.spend(tot);updTk();showUse(r.daily+r.paid);const line='AI usage: '+tot+' tokens ('+src+') · daily remaining: '+TK.daily().left+' · purchased remaining: '+TK.balance();tkLog.push(line);if(tkLog.length>50)tkLog.shift();try{console.debug(line)}catch(e){}return r}
-const fmtT=n=>{n=Math.max(0,Math.floor(n));if(n<1000)return String(n);const r=v=>String(Math.round(v*1000)/1000),k=n/1e3;return n>=1e6||Math.round(k*1000)/1000>=1000?r(n/1e6)+'M':r(k)+'K'};
-let cid=0;const coin=px=>{const g='cg'+(cid++);return'<svg width="'+px+'" height="'+px+'" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="'+g+'" x1="3" y1="2" x2="21" y2="22"><stop offset="0" stop-color="#5eead4"/><stop offset="1" stop-color="#1d6f8f"/></linearGradient></defs><path d="M12 1.5l9 5.25v10.5L12 22.5l-9-5.25V6.75z" fill="url(#'+g+')" stroke="#0e3b4a" stroke-width=".8" stroke-linejoin="round"/><path d="M12 4.2l6.7 3.9v7.8L12 19.8l-6.7-3.9V8.1z" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width=".8"/><path d="M8.2 9l3.8 7 3.8-7" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 6.3l.9.9-.9.9-.9-.9z" fill="#fff"/></svg>'};
-const PK=[{id:'10k',n:1e4,usd:1,idr:18000},{id:'50k',n:5e4,usd:2,idr:36000},{id:'250k',n:25e4,usd:5,idr:90000,tag:'Popular'},{id:'1m',n:1e6,usd:10,idr:180000,tag:'Best value'},{id:'5m',n:5e6,usd:25,idr:450000}];
-const isID=()=>/^id\b/i.test(navigator.language||'')||/Jakarta|Makassar|Pontianak|Jayapura/.test((Intl.DateTimeFormat().resolvedOptions().timeZone)||'')||S.set.lang==='id';
-const lastU=c=>{const m=[...c.msgs].reverse().find(x=>x.r==='u');return m?m.t:''};
-let dispBal=null,tkAnim=0,tkuT=0;
-function updTk(){const b=$('#tkb');if(!b)return;const v=TK.balance();if(!b.querySelector('#tkv'))b.innerHTML=coin(22)+'<span id="tkv"></span>';const el=b.querySelector('#tkv');
- if(dispBal===null||dispBal===v||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){el.textContent=fmtT(v);dispBal=v;tkAnim++;return}
- const from=dispBal,t0=performance.now(),id=++tkAnim;
- const step=t=>{if(id!==tkAnim)return;const k=Math.min(1,(t-t0)/450);dispBal=k<1?Math.round(from+(v-from)*(1-Math.pow(1-k,3))):v;el.textContent=fmtT(dispBal);if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
-/* visual feedback only: reads the amount already deducted by TK.spend(); never deducts anything itself */
-function showUse(n){if(!(n>0))return;try{localStorage.setItem('vyr_lastuse',JSON.stringify({n:n,ts:Date.now()}))}catch(e){}
- const e=$('#tku');if(e){e.textContent='\u2212'+n.toLocaleString('en-US')+' tokens';e.classList.add('on');clearTimeout(tkuT);tkuT=setTimeout(()=>e.classList.remove('on'),3800)}
- const b=$('#tkb');if(b){b.classList.remove('pulse');void b.offsetWidth;b.classList.add('pulse')}
- if($('#ts').classList.contains('on'))drawStore()}
-function lastReq(){let o=null;try{o=JSON.parse(localStorage.getItem('vyr_lastuse'))}catch(e){}return o&&o.n>0?'<div class="row" style="justify-content:space-between;flex-wrap:nowrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--b);font-size:13px"><span class="mt">Last AI Request</span><span class="tn">\u2212'+Number(o.n).toLocaleString('en-US')+' tokens</span></div>':''}
-async function guard(text){if(TK.avail()>=TK.est(text)+120)return true;if(await ask({title:'Not enough tokens.',msg:'Add tokens in the Token Store to continue.',ok:'Open Token Store'}))openStore();return false}
-function drawStore(){const o=$('#ts .tsp'),sc=o?o.scrollTop:0,d=TK.daily(),b=TK.balance(),h=Math.floor(d.resetIn/36e5),m=Math.floor(d.resetIn%36e5/6e4),idr=isID(),odd=PK.length%2===1;
- $('#ts').innerHTML='<div class="tsp" role="dialog" aria-label="Token Store"><div class="tsh"><div class="row" style="gap:10px;flex-wrap:nowrap">'+coin(30)+'<h3>Token Store</h3></div><button class="ib" data-a="tsx" aria-label="Close">'+CI.x+'</button></div>'
- +'<div class="card tbal"><div class="mt">Vyrnexa Tokens</div><div class="row" style="gap:10px;flex-wrap:nowrap;margin-top:4px">'+coin(28)+'<b class="tnum">'+fmtT(b)+'</b></div></div>'
- +'<div class="card"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><b>Daily AI Usage</b><span class="tn">'+fmtT(d.left)+' / '+fmtT(d.limit)+'</span></div><div class="bar" style="margin:10px 0 8px"><i style="width:'+(d.left/d.limit*100)+'%"></i></div><div class="mt" style="font-size:12px">Free daily allowance, used first · Resets in '+h+'h '+m+'m</div>'+lastReq()+'</div>'
- +'<div class="pk">'+PK.map((p,i)=>'<div class="pkc'+(p.tag?' pop':'')+(odd&&i===PK.length-1?' wide':'')+'">'+(p.tag?'<span class="bdg">'+p.tag+'</span>':'')+'<div class="pt"><div class="am">'+fmtT(p.n).toUpperCase()+' TOKENS</div><div class="pr">$'+p.usd+'</div>'+(idr?'<div class="idr">Rp'+String(p.idr).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'</div>':'')+'</div><button class="g" data-a="buy" data-i="'+p.id+'">Purchase</button></div>').join('')+'</div>'
- +'<p class="tfn">Prototype store — purchases are simulated. No real payment is made.</p></div>';
- const nw=$('#ts .tsp');if(nw)nw.scrollTop=sc}
-let tsI=null;function openStore(){drawStore();void $('#ts').offsetHeight;$('#ts').classList.add('on');clearInterval(tsI);tsI=setInterval(drawStore,30000)}
-function closeStore(){$('#ts').classList.remove('on');clearInterval(tsI)}
-let BRN=0,BRT=0;
-/* ---- composer: "+" (attachments/quick tools) and "@" (AI modes/commands) are separate systems ---- */
-const ic2=p=>'<svg class="si" viewBox="0 0 24 24">'+p+'</svg>',CI={plus:ic2('<path d="M12 5v14M5 12h14"/>'),camera:ic2('<path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/>'),photo:ic2('<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 9"/>'),clip:ic2('<path d="M20 11l-8.5 8.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L14 7"/>'),plug:ic2('<path d="M9 3v5M15 3v5M7 8h10v3a5 5 0 0 1-10 0zM12 16v5"/>'),bulb:ic2('<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>'),mic:ic2('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>'),at:ic2('<circle cx="12" cy="12" r="3.5"/><path d="M15.5 12v1.5a2.5 2.5 0 0 0 5 0V12a8.5 8.5 0 1 0-3.4 6.8"/>'),x:ic2('<path d="M6 6l12 12M18 6L6 18"/>'),pen:ic2('<path d="M4 20l1-4L16 5l3 3L8 19z"/>'),book:ic2('<path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/>'),search:ic2('<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>'),agent:ic2('<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.5 6H12a3 3 0 0 1 3 3v.5M8.5 18H12a3 3 0 0 0 3-3v-.5"/>')};
-const AT=[{id:'plug',n:'Plugins',d:'Buka daftar plugin',k:'plugin plugins',i:'plug'},{id:'image',n:'Buat gambar',d:'Segera hadir',k:'gambar image buat',i:'photo',b:1},{id:'sketch',n:'Sketsa',d:'Segera hadir',k:'sketsa sketch',i:'pen',b:1},{id:'deep',n:'Berpikir lebih keras',d:'Mode deep thinking',k:'berpikir think deep',i:'bulb'},{id:'research',n:'Riset mendalam',d:'Segera hadir',k:'riset research',i:'search',b:1},{id:'learn',n:'Belajar',d:'Penjelasan bertahap',k:'belajar learn',i:'book'},{id:'agent',n:'Agent',d:'Buka workflow Agent',k:'agent',i:'agent'}];
-let curAtt=[],pend=[],deep=false,cmd=null,pf=[],curMeta=[],reqMeta=null,atS=null,speechRec=null;
-const cmdOf=id=>AT.find(a=>a.id===id),sizeTxt=n=>n>1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
-function toast(m){const t=$('#tst');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2200)}
-function metaList(){const a=[];if(deep)a.push('Berpikir lebih keras');if(cmd){const c=cmdOf(cmd);a.push('@'+c.n+(c.b?' (segera hadir)':''))}return a}
-/* BACKEND HOOK: this object is what a real backend should receive with the next message (upload pend[i].file separately) */
-function requestMeta(){return{deepThinking:deep,command:cmd,attachments:pend.map(a=>({name:a.name,type:a.type,size:a.size,kind:a.kind}))}}
-function metaLayer(){if(!reqMeta)return[];return[{role:'system',content:'REQUEST META from composer: '+JSON.stringify(reqMeta)+'. If deepThinking is true, reason carefully step by step. Attachments are listed by name; only text files below include content. Commands needing a backend (image, sketch, research) are not available yet: say so honestly.'+pf.map(f=>'\n\nFILE '+f.name+':\n'+f.text.slice(0,20000)).join('')}]}
-function attRow(a){return'<div>'+a.map(x=>'<span class="pc">'+(x.thumb?'<img alt="" src="'+esc(x.thumb)+'">':'<span class="ft">'+esc(String(x.type).slice(0,4).toUpperCase())+'</span>')+'<span><div class="nm">'+esc(x.name)+'</div><div class="sz">'+esc(String(x.type).toUpperCase())+' · '+sizeTxt(x.size)+'</div></span></span>').join('')+'</div>'}
-function pvx(){return pend.map(a=>'<span class="pc">'+(a.thumb?'<img alt="" src="'+esc(a.thumb)+'">':'<span class="ft">'+esc(String(a.type).slice(0,4).toUpperCase())+'</span>')+'<span><div class="nm">'+esc(a.name)+'</div><div class="sz">'+esc(String(a.type).toUpperCase())+' · '+sizeTxt(a.size)+(a.text||a.kind==='image'?'':' · isi belum dibaca')+'</div></span><button data-a="prm" data-i="'+a.id+'" aria-label="Remove">'+CI.x+'</button></span>').join('')
- +(deep?'<span class="pc"><span class="pi" style="width:32px;height:32px">'+CI.bulb+'</span><span class="nm">Berpikir lebih keras</span><button data-a="pdeep" aria-label="Remove">'+CI.x+'</button></span>':'')
- +(cmd?'<span class="pc"><span class="pi" style="width:32px;height:32px">'+CI[cmdOf(cmd).i]+'</span><span class="nm">@'+esc(cmdOf(cmd).n)+(cmdOf(cmd).b?' · segera hadir':'')+'</span><button data-a="pcmd" aria-label="Remove">'+CI.x+'</button></span>':'')}
-function drawPv(){const w=$('#pw');if(w)w.innerHTML=pvx();syncPM()}
-function syncPM(){const m=$('.mi[data-a=deepm]');if(m){m.classList.toggle('act',deep);const d=$('#dst');d.textContent=deep?'ON':'OFF';d.className='st'+(deep?' COMPLETED':'')}}
-function cpHead(){const it=[['camera','Camera','camera'],['photo','Photo','photo'],['file','File','clip'],['plugin','Plugin','plug'],['deepm','Berpikir lebih keras','bulb']];
- return'<div id="pm" role="menu">'+it.map(a=>'<button class="mi'+(a[0]==='deepm'&&deep?' act':'')+'" data-a="'+a[0]+'"><span class="pi">'+CI[a[2]]+'</span><span style="flex:1">'+a[1]+'</span>'+(a[0]==='deepm'?'<span class="st'+(deep?' COMPLETED':'')+'" id="dst">'+(deep?'ON':'OFF')+'</span>':'')+'</button>').join('')+'</div><div id="ap" role="listbox"></div><button class="ib" id="pb" data-a="plus" aria-label="Attachments and tools">'+CI.plus+'</button>'}
-function thumb(f){return new Promise((res0,rej0)=>{const to=setTimeout(()=>rej0(Error('timeout')),4000),res=v=>{clearTimeout(to);res0(v)},rej=e=>{clearTimeout(to);rej0(e)};const r=new FileReader();r.onerror=()=>rej(Error('read'));r.onload=()=>{const im=new Image();im.onerror=()=>rej(Error('img'));im.onload=()=>{const k=Math.min(1,120/Math.max(im.width,im.height)),cv=document.createElement('canvas');cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);res(cv.toDataURL('image/jpeg',.7))};im.src=r.result};r.readAsDataURL(f)})}
-async function addFiles(inp){for(const f of inp.files){if(f.size>10485760){toast(f.name+' lebih dari 10 MB');continue}
-  const ext=(f.name.split('.').pop()||'').toLowerCase(),img=/^image\/(png|jpe?g|webp)/.test(f.type)||['png','jpg','jpeg','webp'].includes(ext),o={id:uid(),name:f.name||'camera.jpg',size:f.size,type:img?(ext||'image'):(ext||'file'),kind:img?'image':'file',file:f};
-  if(img){try{o.thumb=await thumb(f)}catch(e){errs.push('Thumb failed: '+f.name)}}else if(['txt','csv','json','html','css','js','md'].includes(ext)){try{o.text=(await f.text()).slice(0,200000)}catch(e){errs.push('Attach failed: '+f.name);toast('Gagal membaca '+f.name);continue}}
-  pend.push(o)}inp.value='';drawPv()}
-function atOpen(){const a=$('#ap');return a&&a.classList.contains('on')}
-function atCheck(){const ta=$('#in'),ap=$('#ap');if(!ta||!ap)return;const pos=ta.selectionStart,m=/(^|\s)@(\S*)$/.exec(ta.value.slice(0,pos));if(!m){ap.classList.remove('on');atS=null;return}
- const q=m[2].toLowerCase(),list=AT.filter(a=>!q||(a.n+' '+a.k).toLowerCase().includes(q));atS={start:pos-m[2].length-1,end:pos,list,idx:0};
- ap.innerHTML=list.length?list.map((a,i)=>'<button class="mi'+(i?'':' sel')+'" data-a="atpick" data-i="'+a.id+'"><span class="pi">'+CI[a.i]+'</span><span style="flex:1">'+a.n+'<small>'+a.d+'</small></span></button>').join(''):'<div class="mt" style="padding:12px">Tidak ada perintah yang cocok.</div>';
- ap.classList.add('on');$('#pm').classList.remove('on')}
-function atKey(e){if(!atOpen()||!atS||!atS.list.length)return false;const L=atS.list.length,b=[...document.querySelectorAll('#ap .mi')];
- if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();atS.idx=(atS.idx+(e.key==='ArrowDown'?1:L-1))%L;b.forEach((x,i)=>x.classList.toggle('sel',i===atS.idx));return true}
- if(e.key==='Enter'||e.key==='Tab'){e.preventDefault();atPick(atS.list[atS.idx].id);return true}if(e.key==='Escape'){$('#ap').classList.remove('on');return true}return false}
-function atPick(id){const ta=$('#in');if(atS&&ta){ta.value=ta.value.slice(0,atS.start)+ta.value.slice(atS.end);ta.setSelectionRange(atS.start,atS.start);ta.dispatchEvent(new Event('input'))}
- $('#ap').classList.remove('on');atS=null;
- if(id==='plug')openPS();else if(id==='agent'){V='agent';draw()}else if(id==='deep'){deep=true;toast('Berpikir lebih keras aktif')}else{cmd=id;const c=cmdOf(id);toast(c.b?c.n+': segera hadir':c.n+' dipilih')}
- if(V==='chat'){drawPv();ta&&ta.focus()}}
-function openPS(){const it=[['search','Live Search',S.set.searchUrl?'Aktif':'Segera hadir','Cari info terbaru di web'],['lab','Coding Lab','Aktif','Jalankan HTML/CSS/JS di browser'],['mem','Memory',S.mem.length+' entri','Ingatan lokal Vyrnexa AI'],['files','Files','Lokal','Baca dan lampirkan file proyek'],['agent','Agent','DEMO','Alur Goal sampai Final Result']];
- $('#ps').innerHTML='<div class="sh2"><div class="row" style="justify-content:space-between"><h3 style="margin:0">Plugin dan Tools Vyrnexa AI</h3><button class="ib" data-a="psx" aria-label="Close">'+CI.x+'</button></div>'+it.map(a=>'<button class="mi" data-a="psgo" data-i="'+a[0]+'"><span class="pi">'+IC[a[0]]+'</span><span style="flex:1">'+a[1]+'<small>'+a[3]+'</small></span><span class="st">'+esc(a[2])+'</span></button>').join('')+'</div>';$('#ps').classList.add('on')}
-/* ---- live camera (getUserMedia, fully local) ---- */
-let cs=null,cface='environment',cdata=null;
-function stopCam(){if(cs){cs.getTracks().forEach(t=>t.stop());cs=null}const v=$('#cvid');if(v)v.srcObject=null}
-function camUI(m,msg){$('#cvid').hidden=m!=='live';$('#cimg').hidden=m!=='shot';const g=$('#cmsg');g.hidden=!msg;g.textContent=msg||'';
- $('#cbtns').innerHTML=m==='live'?'<button class="g" data-a="camflip">Ganti kamera</button><button data-a="camsnap">Ambil foto</button>':m==='shot'?'<button class="g" data-a="camretake">Ulangi</button><button data-a="camuse">Pakai foto</button>':'<button class="g" data-a="camx">Tutup</button><button data-a="camnative">Kamera bawaan HP</button>'}
-async function startCam(){stopCam();camUI('live');const md=navigator.mediaDevices;
- if(!md||!md.getUserMedia){camUI('err','Browser ini tidak mendukung akses kamera langsung. Pakai kamera bawaan HP.');return}
- try{cs=await md.getUserMedia({video:{facingMode:{ideal:cface}},audio:false});const v=$('#cvid');v.srcObject=cs;try{await v.play()}catch(e){}}
- catch(e){const n=e&&e.name;camUI('err',n==='NotAllowedError'||n==='SecurityError'?'Izin kamera ditolak atau diblokir di sini. Izinkan kamera di pengaturan browser, atau pakai kamera bawaan HP.':n==='NotFoundError'?'Kamera tidak ditemukan di perangkat ini.':'Kamera tidak bisa dibuka ('+(n||'error')+').')}}
-function openCam(){$('#cam').classList.add('on');startCam()}
-function closeCam(){stopCam();cdata=null;$('#cam').classList.remove('on')}
-function dataToFile(u,name){const a=u.split(','),bin=atob(a[1]),b=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);return new File([b],name,{type:'image/jpeg'})}
-Object.assign(H,{camx(){closeCam()},camflip(){cface=cface==='environment'?'user':'environment';startCam()},camretake(){cdata=null;startCam()},camnative(){closeCam();$('#fcam').click()},
- camsnap(){const v=$('#cvid');if(!v.videoWidth){toast('Kamera belum siap');return}const cv=document.createElement('canvas');cv.width=v.videoWidth;cv.height=v.videoHeight;cv.getContext('2d').drawImage(v,0,0);
-  cdata=cv.toDataURL('image/jpeg',.85);stopCam();$('#cimg').src=cdata;camUI('shot')},
- async camuse(){if(!cdata)return;const f=dataToFile(cdata,'camera-'+Date.now()+'.jpg'),o={id:uid(),name:f.name,size:f.size,type:'jpg',kind:'image',file:f};try{o.thumb=await thumb(f)}catch(e){errs.push('Thumb failed: camera')}pend.push(o);closeCam();drawPv();toast('Foto ditambahkan')}});
-Object.assign(H,{store(){openStore()},tsx(){closeStore()},buy(el){const p=PK.find(x=>x.id===el.dataset.i);if(!p)return;TK.add(p.n);updTk();drawStore();toast(fmtT(p.n)+' tokens added.')},plus(){const p=$('#pm'),o=!p.classList.contains('on');p.classList.toggle('on',o);$('#pb').classList.toggle('on',o);$('#ap').classList.remove('on')},
- camera(){H.closeM();openCam()},photo(){H.closeM();$('#fpho').click()},file(){H.closeM();$('#ffil').click()},plugin(){H.closeM();openPS()},
- deepm(){deep=!deep;H.closeM();toast(deep?'Berpikir lebih keras aktif untuk pesan berikutnya':'Berpikir lebih keras dimatikan');drawPv()},
- closeM(){const p=$('#pm');if(p)p.classList.remove('on');const b=$('#pb');if(b)b.classList.remove('on')},
- prm(el){pend=pend.filter(a=>a.id!==el.dataset.i);drawPv()},pdeep(){deep=false;drawPv()},pcmd(){cmd=null;drawPv()},
- atbtn(){const ta=$('#in');ta.focus();const p=ta.selectionStart;ta.value=ta.value.slice(0,p)+(p&&!/\s$/.test(ta.value.slice(0,p))?' @':'@')+ta.value.slice(p);ta.setSelectionRange(ta.value.length,ta.value.length);atCheck()},
- atpick(el){atPick(el.dataset.i)},psx(){$('#ps').classList.remove('on')},psgo(el){$('#ps').classList.remove('on');V=el.dataset.i;draw()},
- mic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('Input suara tidak didukung di browser ini');return}if(speechRec){speechRec.stop();return}
-  speechRec=new SR();speechRec.lang=S.set.lang==='en'?'en-US':'id-ID';speechRec.interimResults=false;
-  speechRec.onresult=e=>{const ta=$('#in');if(ta){ta.value+=(ta.value&&!/\s$/.test(ta.value)?' ':'')+e.results[0][0].transcript;ta.dispatchEvent(new Event('input'))}};
-  speechRec.onerror=e=>toast('Mikrofon: '+(e.error||'error'));speechRec.onend=()=>{speechRec=null;const b=$('#mic');if(b)b.classList.remove('rec')};
-  const b=$('#mic');if(b)b.classList.add('rec');try{speechRec.start()}catch(e){speechRec=null;if(b)b.classList.remove('rec');toast('Tidak bisa memulai mikrofon')}}});
-document.addEventListener('change',e=>{if(e.target.classList&&e.target.classList.contains('fin'))addFiles(e.target)});
-document.addEventListener('click',e=>{if(!e.target.closest('#pm,#pb'))H.closeM();if(!e.target.closest('#ap,#in,.at')){const a=$('#ap');if(a)a.classList.remove('on')}if(e.target.id==='ps')$('#ps').classList.remove('on');if(e.target.id==='ts')closeStore();});
-/* ===== Mode Belajar: data-driven (add subjects/topics in SUBJ, questions via Q(), procedural questions in GEN, mini-games in MG) ===== */
-const LCFG={levels:['Easy','Normal','Hard','Expert','Master','Extreme'],stars:[1,2,3,5,8,12],retry:.5,need:5,up:3,down:2,speedPer:3,speedTime:45,codeUnlock:3,rounds:5};
-const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pk=a=>a[rnd(0,a.length-1)],shf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(0,i);[a[i],a[j]]=[a[j],a[i]]}return a},gcd=(a,b)=>b?gcd(b,a%b):a,fmtN=n=>Number(n).toLocaleString('en-US');
-const LI={star:ic2('<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>'),flame:ic2('<path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/>'),book:ic2('<path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/>'),target:ic2('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>'),game:ic2('<rect x="3" y="8" width="18" height="10" rx="4"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>'),bars:ic2('<path d="M5 20V10M12 20V4M19 20v-7"/>'),trophy:ic2('<path d="M8 4h8v5a4 4 0 0 1-8 0zM5 5H3v2a3 3 0 0 0 3 3M19 5h2v2a3 3 0 0 1-3 3M12 13v4M8 20h8"/>'),back:ic2('<path d="M15 5l-7 7 7 7"/>'),
- math:ic2('<path d="M12 5v8M8 9h8M8 19h8"/>'),eng:ic2('<path d="M5 19L12 4l7 15M8 14h8"/>'),code:ic2('<path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>'),geo:ic2('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>'),logic:ic2('<rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/>'),phys:ic2('<circle cx="12" cy="12" r="1.5"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)"/>'),chem:ic2('<path d="M9 3h6M10 3v6L5 19a1.5 1.5 0 0 0 1.3 2h11.4A1.5 1.5 0 0 0 19 19l-5-10V3"/>'),hist:ic2('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>')};
-const SUBJ=[
-{id:'math',n:'Mathematics',i:'math',d:'Numbers, algebra and shapes',T:[
- {id:'add',n:'Addition & Subtraction',lv:0,x:'Addition combines amounts and subtraction finds what is left. Work with place values: tens first, then ones.',e1:'34 + 25: 30 + 20 = 50 and 4 + 5 = 9, so 59.',e2:'83 − 47: 83 − 40 = 43, then 43 − 7 = 36.',alt:'Picture a number line: addition jumps right, subtraction jumps left. Break the second number into tens and ones.'},
- {id:'mul',n:'Multiplication',lv:1,x:'Multiplication is repeated addition. Break one number into easy parts, multiply each part, then add.',e1:'6 × 7 means seven groups of 6, which is 42.',e2:'14 × 6: 10 × 6 = 60 and 4 × 6 = 24, so 84.',alt:'Imagine 14 rows of 6 chairs. Count 10 rows first, then the other 4.'},
- {id:'frac',n:'Fractions',lv:2,x:'A fraction shows parts of a whole. Same denominators add directly; different ones need a common denominator first.',e1:'2/7 + 3/7 = 5/7 because the pieces are the same size.',e2:'1/2 + 1/3 = 3/6 + 2/6 = 5/6.',alt:'Think of pizza slices: you can only add slices that are the same size.'},
- {id:'alg',n:'Algebra',lv:2,x:'Algebra uses letters for unknown numbers. Undo operations on both sides to get x alone.',e1:'x + 5 = 12, so x = 12 − 5 = 7.',e2:'3x + 4 = 19 → 3x = 15 → x = 5.',alt:'Treat it like a balance scale: whatever you do to one side, do to the other.'},
- {id:'geo',n:'Geometry',lv:2,x:'Perimeter is the distance around a shape; area is the space inside it.',e1:'A 5 × 3 rectangle has area 15 and perimeter 16.',e2:'A triangle with base 6 and height 4 has area 6 × 4 ÷ 2 = 12.',alt:'Perimeter is the fence around a garden; area is the grass inside it.'},
- {id:'eq',n:'Equations',lv:3,x:'Some equations have two unknowns or squared terms. Combine equations or factor to solve them.',e1:'x + y = 9 and x − y = 3: adding gives 2x = 12, so x = 6.',e2:'x² − 5x + 6 = 0 factors into (x − 2)(x − 3), so x = 2 or 3.',alt:'Add two equations so one unknown cancels. For squares, find two numbers that multiply and add to the right values.'}]},
-{id:'eng',n:'English',i:'eng',d:'Vocabulary, grammar and sentences',T:[
- {id:'vocab',n:'Word Meanings',lv:0,x:'Learning a word means knowing its meaning and a similar word. Context clues in a sentence help you guess.',e1:'"Huge" means very big, like a huge elephant.',e2:'"Reluctant" means unwilling: she was reluctant to speak.',alt:'Link each new word to a picture or a word you already know.'},
- {id:'fill',n:'Fill in the Blank',lv:1,x:'Look at the subject and the clues around the blank to choose the right word form.',e1:'"He ___ tea." With "he", the verb takes -s: "drinks".',e2:'"If I ___ rich, I would travel." Unreal conditions use "were".',alt:'Read the sentence aloud with each option and listen for the one that sounds right.'},
- {id:'grammar',n:'Grammar',lv:1,x:'Grammar rules keep sentences clear. Check the subject, the verb and whether they agree.',e1:'"She doesn\'t like tea" uses "does" because the subject is she.',e2:'"Neither of the boys is here": "neither" is singular.',alt:'Find the subject first, then ask: is it one or many? The verb must match.'},
- {id:'order',n:'Sentence Order',lv:1,x:'A sentence usually goes: subject, verb, then the rest. Start with who does the action.',e1:'"The cat sat on the mat": cat is the subject, sat is the verb.',e2:'"She has never visited Japan": helper verb first, then "never".',alt:'Ask "who?" then "does what?" and add the details last.'}]},
-{id:'code',n:'Coding',i:'code',d:'JavaScript from variables to APIs',T:[
- {id:'vars',n:'Variables',lv:0,x:'A variable stores a value under a name. Use let for values that can change and const for ones that do not.',e1:'let age = 12; stores 12 in age.',e2:'let total = a + b; stores the sum of a and b.',alt:'A variable is a labelled box. You can put a value in and read it later.'},
- {id:'cond',n:'Conditions',lv:1,x:'An if statement runs code only when a condition is true. else runs when it is false.',e1:'if (score > 50) { pass } runs only when score is above 50.',e2:'age >= 18 includes 18; age > 18 does not.',alt:'Think of a fork in the road: the condition decides which path you take.'},
- {id:'loops',n:'Loops',lv:1,x:'A loop repeats code. A for loop has a start, a stop condition and a step.',e1:'for (let i = 0; i < 3; i++) runs with i = 0, 1, 2.',e2:'i <= 3 would also run for 3, so it repeats one more time.',alt:'A loop is a washing machine cycle: repeat the same steps until the condition ends.'},
- {id:'funcs',n:'Functions',lv:2,x:'A function is reusable code. It takes inputs (parameters) and can send back a result with return.',e1:'function double(n) { return n * 2; } gives 8 for double(4).',e2:'Without return, a function gives back undefined.',alt:'A function is a recipe: ingredients in, finished dish out.'},
- {id:'arrs',n:'Arrays',lv:2,x:'An array stores a list. Items are numbered from 0 and .length tells how many there are.',e1:'const a = [10, 20, 30]; a[0] is 10.',e2:'a.length is 3, but the last index is 2.',alt:'Think of numbered lockers that start at locker 0.'},
- {id:'objs',n:'Objects',lv:3,x:'An object groups related values as key: value pairs. Read them with dot notation.',e1:'const u = { name: "Rio" }; u.name is "Rio".',e2:'u.city = "Bali"; adds a new property.',alt:'An object is a profile card with labelled fields.'},
- {id:'apis',n:'APIs',lv:3,x:'An API lets your code ask another service for data. fetch returns a Promise, so you await it.',e1:'const res = await fetch(url); waits for the response.',e2:'Then await res.json() turns the response into usable data.',alt:'Ordering at a restaurant: you ask, wait, then receive your order.'}]},
-{id:'geo',n:'Geography',i:'geo',d:'Capitals, oceans and landmarks',T:[
- {id:'cap',n:'Capitals',lv:0,x:'Every country has a capital city where its government sits. The biggest city is not always the capital.',e1:'Paris is the capital of France.',e2:'Canberra, not Sydney, is the capital of Australia.',alt:'Pair each country with a famous landmark in its capital.'},
- {id:'loc',n:'Maps & Locations',lv:1,x:'Maps show where oceans, mountains and deserts are. Knowing continents helps you place them.',e1:'The Sahara is a desert in northern Africa.',e2:'The Himalayas, home of Everest, run across Asia.',alt:'Picture a world map and trace each place with your finger.'}]},
-{id:'logic',n:'Logic',i:'logic',d:'Patterns, sequences and puzzles',T:[
- {id:'pat',n:'Number Patterns',lv:1,x:'Find the rule linking neighbouring numbers: a constant step, a multiplier or a repeating idea.',e1:'3, 7, 11, 15: each step adds 4.',e2:'2, 6, 18, 54: each step multiplies by 3.',alt:'Subtract neighbours. If the differences are equal, it is an adding pattern.'},
- {id:'seq',n:'Sequences',lv:2,x:'Some sequences alternate two rules or grow by growing steps.',e1:'2, 5, 4, 7, 6 alternates +3 and −1.',e2:'1, 3, 6, 10, 15 adds 2, 3, 4, 5...',alt:'Write the gaps between numbers; the gaps themselves form a pattern.'},
- {id:'prob',n:'Problem Solving',lv:2,x:'Break a problem into small steps and use only what the statements guarantee.',e1:'A > B and B > C means A > C.',e2:'If a notebook costs twice a 3-coin pen, it costs 6.',alt:'Draw it or list the facts, then solve one step at a time.'}]},
-{id:'phys',n:'Physics',i:'phys',d:'Motion, forces and energy',T:[
- {id:'motion',n:'Motion',lv:1,x:'Velocity tells speed and direction. When direction reverses, velocity passes through zero.',e1:'A thrown ball stops for an instant at its highest point.',e2:'Constant velocity means no acceleration.',alt:'Imagine a car pausing before reversing: it must stop first.'},
- {id:'forces',n:'Forces',lv:2,x:'A net force changes motion. With no net force, an object keeps its velocity (inertia).',e1:'A puck on ice keeps gliding until friction slows it.',e2:'In a vacuum a hammer and a feather fall together.',alt:'Heavier things do not fall faster unless air resists them.'},
- {id:'energy',n:'Energy',lv:2,x:'Energy changes form but is conserved. Height stores potential energy; motion is kinetic energy.',e1:'A roller coaster at the top has maximum potential energy.',e2:'KE = ½mv², so doubling speed quadruples kinetic energy.',alt:'Potential energy is stored; kinetic energy is "in action".'}]},
-{id:'chem',n:'Chemistry',i:'chem',d:'Elements, formulas and reactions',T:[
- {id:'elements',n:'Elements',lv:0,x:'Each element has a symbol of one or two letters, sometimes from its Latin name.',e1:'O is oxygen and H is hydrogen.',e2:'Na is sodium, from the Latin natrium.',alt:'Make flashcards: name on one side, symbol on the other.'},
- {id:'formulas',n:'Formulas',lv:1,x:'A formula shows which atoms are in a compound and how many.',e1:'H2O: two hydrogen atoms and one oxygen atom.',e2:'CO2: one carbon and two oxygen atoms.',alt:'Subscript numbers count atoms of the element before them.'},
- {id:'react',n:'Reactions',lv:2,x:'In a chemical reaction new substances form. Acids have pH below 7 and bases above 7.',e1:'Iron plus oxygen makes rust, a new substance.',e2:'Lemon juice has a low pH, so it is acidic.',alt:'If you cannot easily reverse it, such as rusting, it is usually chemical.'}]},
-{id:'hist',n:'History',i:'hist',d:'Timelines and key civilizations',T:[
- {id:'timeline',n:'Timelines',lv:1,x:'Placing events in order shows cause and effect. Anchor with famous dates.',e1:'Pyramids came long before the printing press.',e2:'The French Revolution (1789) came before World War I.',alt:'Draw a line and mark ancient, medieval and modern eras.'},
- {id:'ancient',n:'Ancient Civilizations',lv:1,x:'Early civilizations grew along rivers and left writing, buildings and laws.',e1:'Ancient Egyptians wrote hieroglyphs beside the Nile.',e2:'The Inca built Machu Picchu in the Andes.',alt:'Match each civilization with one famous achievement.'},
- {id:'modern',n:'Modern History',lv:2,x:'Modern history covers recent centuries, from revolutions and world wars to independence movements.',e1:'Indonesia proclaimed independence on 17 August 1945.',e2:'The Cold War was a rivalry between the USA and USSR.',alt:'Connect each event to what happened just before it.'}]}];
-const SJ=id=>SUBJ.find(x=>x.id===id),TP=(s,t)=>SJ(s).T.find(x=>x.id===t);
-/* procedural questions: GEN['subject.topic'](levelIndex) -> {q,a,h:[3 hints],e,x?:[alt answers]} */
-const GEN={
-'math.add':l=>{const d=l<2?2:l<4?3:4,lo=10**(d-1),hi=10**d-1,sub=Math.random()<.5;let A=rnd(lo,hi),B=rnd(lo,hi);if(B%10===0)B++;if(sub){if(A<=B)A=B+rnd(1,9)}const b1=B-B%10,b2=B%10,o=sub?'−':'+',a=sub?A-B:A+B;
- return{q:`What is ${A} ${o} ${B}?`,a,h:[`Break ${B} into ${b1} + ${b2}.`,sub?`${A} − ${b1} = ${A-b1}.`:`${A} + ${b1} = ${A+b1}.`,sub?`${A-b1} − ${b2} = ?`:`${A+b1} + ${b2} = ?`],e:`${A} ${o} ${B} = ${a}.`}},
-'math.mul':l=>{const A=[rnd(2,9),rnd(11,15),rnd(11,49),rnd(101,399),rnd(11,30),rnd(31,99)][l];let B=l<4?rnd(3,9):rnd(11,29);if(B>=10&&B%10===0)B++;const b1=B>=10?B-B%10:Math.floor(B/2),b2=B-b1;
- return{q:`What is ${A} × ${B}?`,a:A*B,h:[`Break ${B} into ${b1} + ${b2}.`,`${A} × ${b1} = ${A*b1} and ${A} × ${b2} = ${A*b2}.`,`${A*b1} + ${A*b2} = ?`],e:`${A} × ${B} = ${A*B}.`}},
-'math.frac':l=>{const rf=(n,d)=>{const g=gcd(n,d);return d/g===1?String(n/g):`${n/g}/${d/g}`};
- if(l<2){const d=rnd(5,12);let a=rnd(1,d-2),b=rnd(1,d-2);while((a+b)%d===0)b=rnd(1,d-2);const n=a+b,g=gcd(n,d);return{q:`What is ${a}/${d} + ${b}/${d}? (simplest form)`,a:rf(n,d),x:[`${n}/${d}`],h:['The denominators match, so add only the numerators.',`${a} + ${b} = ${n}, giving ${n}/${d}.`,g>1?`Divide top and bottom by ${g}.`:'It is already in simplest form.'],e:`${a}/${d} + ${b}/${d} = ${rf(n,d)}.`}}
- if(l<4){const g=rnd(2,9),pr=pk([[1,2],[1,3],[2,3],[3,4],[2,5],[3,5],[1,4]]),n=pr[0]*g,d=pr[1]*g;return{q:`Simplify ${n}/${d}.`,a:`${pr[0]}/${pr[1]}`,h:[`Find a number that divides both ${n} and ${d}.`,`The greatest common divisor is ${g}.`,`${n} ÷ ${g} = ${pr[0]} and ${d} ÷ ${g} = ${pr[1]}. So the answer is?`],e:`${n}/${d} simplifies to ${pr[0]}/${pr[1]}.`}}
- const [q1,s1]=pk([[2,3],[3,4],[2,5],[3,5],[4,5]]),p=rnd(1,q1-1),r=rnd(1,s1-1),L=q1*s1/gcd(q1,s1),n=p*L/q1+r*L/s1;return{q:`What is ${p}/${q1} + ${r}/${s1}? (simplest form)`,a:rf(n,L),x:[`${n}/${L}`],h:[`Find a common denominator for ${q1} and ${s1}.`,`Use ${L}: ${p*L/q1}/${L} + ${r*L/s1}/${L}.`,`Add the numerators: ${n}/${L}. Can it be simplified?`],e:`The sum is ${rf(n,L)}.`}},
-'math.alg':l=>{const x=rnd(2,12);if(l===0){const a=rnd(3,15);return{q:`Solve x + ${a} = ${x+a}`,a:x,h:[`Do the opposite of +${a} on both sides.`,`x = ${x+a} − ${a}.`,`${x+a} − ${a} = ?`],e:`x = ${x}.`}}
- if(l===1){const a=rnd(2,9);return{q:`Solve ${a}x = ${a*x}`,a:x,h:[`Divide both sides by ${a}.`,`x = ${a*x} ÷ ${a}.`,`${a*x} ÷ ${a} = ?`],e:`x = ${x}.`}}
- if(l<4){const a=rnd(2,9),b=rnd(2,15);return{q:`Solve ${a}x + ${b} = ${a*x+b}`,a:x,h:[`First subtract ${b} from both sides.`,`${a}x = ${a*x}.`,`Now divide ${a*x} by ${a}.`],e:`x = ${x}.`}}
- if(l===4){const a=rnd(2,6),b=rnd(1,6),xx=rnd(b+2,b+10);return{q:`Solve ${a}(x − ${b}) = ${a*(xx-b)}`,a:xx,h:[`Divide both sides by ${a} first.`,`x − ${b} = ${xx-b}.`,`Add ${b} to ${xx-b}.`],e:`x = ${xx}.`}}
- const c=rnd(1,4),a=c+rnd(2,5),b=rnd(1,10),d=b+(a-c)*x;return{q:`Solve ${a}x + ${b} = ${c}x + ${d}`,a:x,h:[`Subtract ${c}x from both sides to gather the x terms.`,`${a-c}x + ${b} = ${d}, so ${a-c}x = ${d-b}.`,`Divide ${d-b} by ${a-c}.`],e:`x = ${x}.`}},
-'math.geo':l=>{const w=rnd(3,12),h=rnd(2,9);if(l===0)return{q:`A rectangle is ${w} by ${h}. What is its perimeter?`,a:2*(w+h),h:['Perimeter = 2 × (length + width).',`${w} + ${h} = ${w+h}.`,`2 × ${w+h} = ?`],e:`Perimeter = ${2*(w+h)}.`};
- if(l===1)return{q:`A rectangle is ${w} by ${h}. What is its area?`,a:w*h,h:['Area = length × width.',`Multiply ${w} and ${h}.`,`${w} × ${h} = ?`],e:`Area = ${w*h}.`};
- if(l===2){const b=2*rnd(2,8);return{q:`A triangle has base ${b} and height ${h}. What is its area?`,a:b*h/2,h:['Area of a triangle = base × height ÷ 2.',`${b} × ${h} = ${b*h}.`,`${b*h} ÷ 2 = ?`],e:`Area = ${b*h/2}.`}}
- if(l===3){const k=rnd(1,4);return{q:`A right triangle has legs ${3*k} and ${4*k}. What is the hypotenuse?`,a:5*k,h:['Use a² + b² = c².',`${9*k*k} + ${16*k*k} = ${25*k*k}.`,`What is the square root of ${25*k*k}?`],e:`Hypotenuse = ${5*k}.`}}
- const r=rnd(2,9);if(l===4){const a=(3.14*r*r).toFixed(2);return{q:`A circle has radius ${r}. What is its area? (π = 3.14)`,a,h:['Area = π × r².',`r² = ${r*r}.`,`3.14 × ${r*r} = ?`],e:`Area = ${a}.`}}
- const c=(2*3.14*r).toFixed(2);return{q:`A circle has radius ${r}. What is its circumference? (π = 3.14)`,a:c,h:['Circumference = 2 × π × r.',`2 × 3.14 = 6.28.`,`6.28 × ${r} = ?`],e:`Circumference = ${c}.`}},
-'math.eq':l=>{if(l<3){const y=rnd(1,8),x=y+rnd(1,8);return{q:`If x + y = ${x+y} and x − y = ${x-y}, what is x?`,a:x,h:['Add the two equations so y cancels.',`2x = ${x+y} + ${x-y} = ${2*x}.`,`Divide ${2*x} by 2.`],e:`x = ${x}.`}}
- const p=rnd(1,8),q=p+rnd(1,6);return{q:`Solve x² − ${p+q}x + ${p*q} = 0. Enter the larger root.`,a:q,h:[`Find two numbers that multiply to ${p*q} and add to ${p+q}.`,`They are ${p} and ${q}, so (x − ${p})(x − ${q}) = 0.`,`The roots are ${p} and ${q}. Which is larger?`],e:`The larger root is ${q}.`}},
-'logic.pat':l=>{if(l<2){const s=rnd(1,9),d=rnd(2,7),a=[0,1,2,3].map(i=>s+i*d);return{q:`${a.join(', ')}, ?`,a:s+4*d,h:['Look at the difference between neighbours.',`Each step adds ${d}.`,`${a[3]} + ${d} = ?`],e:`Next is ${s+4*d}.`}}
- if(l<4){const s=rnd(1,4),r=rnd(2,3),a=[0,1,2,3].map(i=>s*r**i);return{q:`${a.join(', ')}, ?`,a:s*r**4,h:['Divide each term by the one before it.',`Each term is multiplied by ${r}.`,`${a[3]} × ${r} = ?`],e:`Next is ${s*r**4}.`}}
- if(l===4)return{q:'1, 4, 9, 16, ?',a:25,h:['These are special numbers.','1², 2², 3², 4²...','The next is 5² = ?'],e:'Square numbers: next is 25.'};
- return{q:'1, 1, 2, 3, 5, 8, ?',a:13,h:['Each term depends on the previous two.','Add the last two terms: 5 + 8.','5 + 8 = ?'],e:'Fibonacci: next is 13.'}},
-'logic.seq':l=>{if(l<2){const s=rnd(40,60),d=rnd(3,7),a=[0,1,2,3].map(i=>s-i*d);return{q:`${a.join(', ')}, ?`,a:s-4*d,h:['Check whether the numbers go up or down.',`Each step subtracts ${d}.`,`${a[3]} − ${d} = ?`],e:`Next is ${s-4*d}.`}}
- if(l<4){const s=rnd(1,5),a=[s,s+3,s+2,s+5,s+4];return{q:`${a.join(', ')}, ?`,a:s+7,h:['Two different steps alternate.','They are +3 and −1.',`The last step was −1, so next is +3: ${s+4} + 3 = ?`],e:`Next is ${s+7}.`}}
- return{q:'1, 3, 6, 10, 15, ?',a:21,h:['Write the gaps between numbers.','The gaps are 2, 3, 4, 5...','The next gap is 6: 15 + 6 = ?'],e:'Triangular numbers: next is 21.'}}};
-const BANK=[];const Q=(s,t,l,k,q,o,a,h,e)=>BANK.push({s,t,l,k,q,o,a:k==='order'?o.slice():a,h:h||[],e,id:s+t+BANK.length});
-Q('eng','vocab',0,'mc','What does "ancient" mean?',['Very old','Very small','Very fast','Very loud'],0,['Think of the pyramids.','It describes time, not size or speed.'],'"Ancient" means very old, from long ago.');
-Q('eng','vocab',1,'mc','Choose the synonym of "rapid".',['Slow','Quick','Heavy','Quiet'],1,['A synonym means nearly the same.','Think of a rapid river.'],'"Rapid" means quick.');
-Q('eng','vocab',3,'mc','What does "reluctant" mean?',['Eager','Unwilling','Careful','Angry'],1,['Someone reluctant hesitates.','It is the opposite of eager.'],'"Reluctant" means unwilling or hesitant.');
-Q('eng','fill',0,'fill','She ___ to school every day. (go/goes)','goes',['The subject is "she" (third person singular).','Third person singular adds -s.'],'With "she", use "goes".');
-Q('eng','fill',2,'fill','If I ___ you, I would study. (was/were)','were',['This is a hypothetical condition.','Unreal "if" sentences use a special form.'],'Use "were": "If I were you".');
-Q('eng','grammar',1,'mc','Which sentence is correct?',["He don't like tea.","He doesn't like tea.",'He not like tea.','He no likes tea.'],1,['Look at the helper verb used with "he".','"Does" goes with he, she and it.'],'"He doesn\'t like tea" uses the correct helper.');
-Q('eng','grammar',3,'mc','Choose: "Neither of the boys ___ here."',['are','is','were','be'],1,['"Neither" is singular.','Match the verb to a singular subject.'],'"Neither" takes a singular verb: "is".');
-Q('eng','order',1,'order','Arrange the sentence:',['The cat','sat','on','the mat'],null,['A sentence starts with the subject.','The subject is "The cat".'],'The cat sat on the mat.');
-Q('eng','order',3,'order','Arrange the sentence:',['She','has','never','visited','Japan'],null,['Start with who does the action.','The helper verb "has" comes before "never".'],'She has never visited Japan.');
-Q('code','vars',0,'mc','What is the output?\nlet a = 5;\nlet b = 3;\nconsole.log(a + b);',['8','53','"a+b"','Error'],0,['"+" with two numbers adds them.','5 + 3 = ?'],'Both are numbers, so + adds them: 8.');
-Q('code','vars',1,'fill','Complete: ___ name = "Ana";\n(keyword for a variable that can change)','let',['It is a keyword for variables that can be reassigned.','It starts with the letter l.'],'"let" declares a variable that can change.');
-Q('code','cond',1,'mc','Output?\nlet x = 10;\nif (x > 5) { console.log("big"); } else { console.log("small"); }',['big','small','nothing','Error'],0,['Check whether 10 > 5.','The if branch runs when the condition is true.'],'10 > 5 is true, so "big" prints.');
-Q('code','cond',2,'mc','Which condition is true only when age is 18 or more?',['age < 18','age >= 18','age == 17','age != 18'],1,['"or more" includes 18 itself.','Which operator means greater than OR equal?'],'age >= 18 includes 18 and above.');
-Q('code','loops',1,'mc','How many times does this print?\nfor (let i = 0; i < 3; i++) console.log(i);',['2','3','4','Infinite'],1,['List the values of i: 0, then...','The loop stops when i < 3 is false.'],'i takes 0, 1, 2: three times.');
-Q('code','loops',2,'order','Arrange to print 1 to 3:',['for (let i = 1; i <= 3; i++) {','console.log(i);','}'],null,['The loop header comes first.','The closing brace comes last.'],'Header, body, closing brace.');
-Q('code','funcs',1,'mc','Output?\nfunction double(n) { return n * 2; }\nconsole.log(double(4));',['4','6','8','undefined'],2,['Replace n with 4.','4 * 2 = ?'],'double(4) returns 4 * 2 = 8.');
-Q('code','funcs',3,'mc','Find the bug:\nfunction add(a, b) { a + b; }',['Missing return','Wrong name','Needs let','Too many params'],0,['What does the function give back to the caller?','Without "return" the result is lost.'],'Without return, add() gives undefined. Use: return a + b;');
-Q('code','arrs',1,'mc','Output?\nconst a = [10, 20, 30];\nconsole.log(a[1]);',['10','20','30','undefined'],1,['Arrays start counting at 0.','Index 1 is the second item.'],'a[1] is the second element: 20.');
-Q('code','arrs',2,'fill','What does this print?\nconst a = ["x","y","z"];\nconsole.log(a.length);','3',['Count the elements.','There are x, y and z.'],'a.length is 3.');
-Q('code','objs',1,'mc','Output?\nconst u = { name: "Rio", age: 12 };\nconsole.log(u.age);',['name','Rio','12','undefined'],2,['Dot notation reads a property.','Which value is stored under "age"?'],'u.age reads the age property: 12.');
-Q('code','objs',3,'mc','Which line adds a property city to u?',['u.city = "Bali";','u + city;','add u.city;','u[city];'],0,['Assignment with dot notation creates a property.','Use = to set a value.'],'u.city = "Bali" creates the property.');
-Q('code','apis',2,'mc','What does fetch(url) return first?',['The data directly','A Promise','A string','An array'],1,['Network requests take time.','You must await it or use .then().'],'fetch returns a Promise that resolves to a Response.');
-Q('code','apis',3,'order','Arrange to load JSON:',['const res = await fetch(url);','const data = await res.json();','console.log(data);'],null,['You need the response before parsing it.','Printing is the last step.'],'Fetch, parse JSON, then use the data.');
-Q('geo','cap',0,'mc','What is the capital of France?',['Paris','Lyon','Nice','Marseille'],0,['It has the Eiffel Tower.','It starts with P.'],'Paris is the capital of France.');
-Q('geo','cap',1,'mc','What is the capital of Indonesia?',['Bandung','Jakarta','Surabaya','Medan'],1,['It is on the island of Java.','It starts with J.'],"Jakarta is Indonesia's capital.");
-Q('geo','cap',3,'mc','What is the capital of Australia?',['Sydney','Melbourne','Canberra','Perth'],2,['It is not the largest city.','It was purpose-built as a capital.'],'Canberra is the capital, not Sydney.');
-Q('geo','loc',0,'tf','True or false: the Sahara is in Africa.',['True','False'],0,['It is a huge desert.','Think of the northern part of the continent.'],'True, the Sahara spans North Africa.');
-Q('geo','loc',1,'mc','Which ocean lies between Africa and Australia?',['Atlantic','Indian','Arctic','Pacific'],1,['Think of Madagascar and India.','It is named after a country.'],'The Indian Ocean.');
-Q('geo','loc',2,'mc','Mount Everest is in which mountain range?',['Andes','Alps','Himalayas','Rockies'],2,['It borders Nepal and Tibet.','It is the highest range in Asia.'],'Everest is in the Himalayas.');
-Q('logic','prob',1,'mc','Tom is taller than Sam. Sam is taller than Lee. Who is shortest?',['Tom','Sam','Lee','Cannot tell'],2,['Order them from tallest to shortest.','Tom > Sam > Lee.'],'Tom > Sam > Lee, so Lee is the shortest.');
-Q('logic','prob',2,'fill','A pen costs 3 and a notebook costs twice as much. What do 2 notebooks cost?','12',['Find the notebook price first.','Notebook = 3 × 2 = 6.'],'A notebook costs 6, so two cost 12.');
-Q('logic','prob',3,'mc','All cats are animals. Some animals are black. Which is certainly true?',['All cats are black','Some cats are black','All cats are animals','No cat is black'],2,['Only use what the statements guarantee.','Which option repeats a given fact?'],'Only "All cats are animals" is guaranteed.');
-Q('phys','motion',1,'mc','A ball thrown straight up reaches its highest point. Its velocity there is...',['Maximum','Zero','Downward','Constant'],1,['It is about to change direction.','Changing direction means passing through zero.'],'At the top the ball momentarily stops, so velocity is zero.');
-Q('phys','forces',1,'mc','If no net force acts on a moving object, it will...',['Stop','Keep moving at constant velocity','Speed up','Fall'],1,["Think of Newton's first law.",'Objects keep their motion unless a force acts.'],'With no net force it keeps constant velocity.');
-Q('phys','forces',2,'mc','A feather and a hammer fall in a vacuum. Which lands first?',['Hammer','Feather','Same time','Depends on color'],2,['Without air there is no drag.','Gravity accelerates all masses equally.'],'In a vacuum both fall at the same rate.');
-Q('phys','energy',1,'mc','A roller coaster at the top has mostly...',['Kinetic energy','Potential energy','Sound energy','Nuclear energy'],1,['Height stores energy.','It is energy due to position.'],'At the top it has maximum gravitational potential energy.');
-Q('phys','energy',3,'mc','Doubling an object\'s speed multiplies its kinetic energy by...',['2','3','4','8'],2,['KE = ½mv².','Speed is squared.'],'KE depends on v², so doubling speed gives 4 times the energy.');
-Q('chem','elements',0,'mc','What is the symbol for oxygen?',['O','Ox','Og','Om'],0,['It has one letter.','It is the first letter of its name.'],'Oxygen is O.');
-Q('chem','elements',1,'mc','Which symbol is sodium?',['S','So','Na','Sd'],2,['Its Latin name is natrium.','It starts with N.'],'Sodium is Na, from natrium.');
-Q('chem','formulas',1,'mc','What is the formula of water?',['H2O','HO2','CO2','H2O2'],0,['Two hydrogens and one oxygen.','Hydrogen comes first.'],'Water is H2O.');
-Q('chem','formulas',2,'fill','Write the formula of carbon dioxide.','CO2',['One carbon atom.','Two oxygen atoms.'],'Carbon dioxide is CO2.');
-Q('chem','react',2,'mc','Rust forming on iron is...',['A physical change','A chemical reaction','Melting','Evaporation'],1,['A new substance forms.','Iron + oxygen gives...'],'Rusting makes iron oxide: a chemical reaction.');
-Q('chem','react',3,'mc','A solution with pH 3 is...',['Basic','Neutral','Acidic','Salty'],2,['Below 7 is on one side of the scale.','Lemon juice is around there.'],'pH below 7 is acidic.');
-Q('hist','timeline',1,'order','Order these events, oldest first:',['Building of the Pyramids','Fall of Rome','Printing press','Moon landing'],null,['Ancient Egypt is the earliest.','Gutenberg worked in the 1400s.'],'Pyramids, Fall of Rome, Printing press, Moon landing.');
-Q('hist','timeline',3,'order','Order oldest first:',['Renaissance','French Revolution','World War I','Internet'],null,['Start with the 14th to 17th centuries.','The Revolution began in 1789.'],'Renaissance, French Revolution, WWI, Internet.');
-Q('hist','ancient',1,'mc','Which civilization built Machu Picchu?',['Aztec','Inca','Maya','Roman'],1,['It is in the Andes of Peru.','Their capital was Cusco.'],'Machu Picchu was built by the Inca.');
-Q('hist','ancient',2,'mc','Hieroglyphs were used by...',['Ancient Greeks','Ancient Egyptians','Vikings','Mongols'],1,['They were written on papyrus and temple walls.','Think of the Nile.'],'Ancient Egyptians used hieroglyphs.');
-Q('hist','modern',2,'mc','Indonesia proclaimed independence in...',['1945','1949','1955','1965'],0,['It was right after World War II ended.','It was proclaimed on 17 August.'],'Independence was proclaimed on 17 August 1945.');
-Q('hist','modern',3,'mc','The Cold War was mainly between...',['USA and USSR','UK and France','China and Japan','Germany and Italy'],0,['Two superpowers after WWII.','One was capitalist, one communist.'],'The USA and the Soviet Union.');
-const MG=[{id:'speed',s:'math',n:'Speed Math',d:'Solve as many as you can in 45 seconds',sp:1},{id:'word',s:'eng',n:'Word Match',d:'Pick the right meaning',topics:['vocab']},{id:'sent',s:'eng',n:'Sentence Builder',d:'Put the words in order',topics:['order']},{id:'gram',s:'eng',n:'Grammar Check',d:'Fill the blank and fix grammar',topics:['fill','grammar']},{id:'code',s:'code',n:'Coding Challenge',d:'Climb from Variables to APIs',stage:1},{id:'cap',s:'geo',n:'Capital Quest',d:'Countries, capitals and places',topics:['cap','loc']},{id:'pat',s:'logic',n:'Pattern Sprint',d:'Patterns, sequences and puzzles',topics:['pat','seq','prob']},{id:'pred',s:'phys',n:'Predict It',d:'What happens next?',topics:['motion','forces','energy']},{id:'elem',s:'chem',n:'Element Match',d:'Symbols, formulas and reactions',topics:['elements','formulas','react']},{id:'time',s:'hist',n:'Timeline',d:'Order events and test concepts',topics:['timeline','ancient','modern']}];
-const ACH=[{id:'first',n:'First correct answer',f:s=>s.correct>=1},{id:'s5',n:'5 in a row',f:s=>s.best>=5},{id:'st50',n:'50 Stars',f:s=>s.stars>=50},{id:'q50',n:'50 questions',f:s=>s.total>=50}];
-/* leaderboard: the server must validate answers and compute stars itself; never accept a client-submitted total */
-/* Server-validated leaderboard. Backend contract: GET ?action=leaderboard&limit=50 -> {rows:[{name,stars}],me:{rank,stars}}; POST {action:'answer',name,questionId,subject,topic,answer}. Server re-validates answers and calculates Stars. */
-const LB={rows:[],me:null,busy:false,err:'',loadedAt:0,
- url(){return String(S.set.learnLeaderboardUrl||'').trim()},
- async load(force=false){const u=this.url();if(!u){this.rows=[];this.me=null;this.err='';return false}if(!force&&this.loadedAt&&Date.now()-this.loadedAt<15000)return true;this.busy=true;this.err='';try{const r=await fetch(u+(u.includes('?')?'&':'?')+'action=leaderboard&limit=50',{headers:{Accept:'application/json'}});if(!r.ok)throw Error('Leaderboard server error '+r.status);const j=await r.json();if(!Array.isArray(j.rows))throw Error('Invalid leaderboard response: rows array missing');this.rows=j.rows.slice(0,50).map(x=>({name:String(x.name||'Learner').slice(0,20),stars:Math.max(0,Math.floor(+x.stars||0))}));this.me=j.me||null;this.loadedAt=Date.now();this.err='';return true}catch(e){this.err=e.message||'Could not load leaderboard';errs.push('Leaderboard: '+this.err);return false}finally{this.busy=false;drawLearn()}},
- async submit(q,r){const u=this.url();if(!u||!q||!chk(q,r))return;try{await fetch(u,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({action:'answer',name:LS.name||'Learner',questionId:q.id,subject:q.s,topic:q.t,answer:r})})}catch(e){errs.push('Leaderboard submit: '+(e.message||'request failed'))}}
+button{
+  padding:12px 18px;
+  border:0;
+  border-radius:10px;
+}`,
+
+  js:
+`function hello(){
+  console.log("Hello from Vyrnexa!");
+  alert("JavaScript is working!");
+}
+
+console.log("JavaScript ready.");`
 };
-/* ---- state ---- */
-let LS=(()=>{let o=null;try{o=JSON.parse(localStorage.getItem('vyr_learn'))}catch(e){}return Object.assign({v:1,name:'Learner',stars:0,streak:0,best:0,correct:0,total:0,subj:{},recent:[],plan:null,ach:{},mini:{}},o||{})})();
-const lsave=()=>{try{localStorage.setItem('vyr_learn',JSON.stringify(LS))}catch(e){}};
-const SG=s=>LS.subj[s]||(LS.subj[s]={lvl:1,run:0,wr:0,t:{}}),TG=(s,t)=>SG(s).t[t]||(SG(s).t[t]={r:0,w:0,n:0});
-const tpct=(s,t)=>Math.round(Math.min(1,TG(s,t).r/LCFG.need)*100),spct=s=>{const T=SJ(s).T;return Math.round(T.reduce((a,t)=>a+tpct(s,t.id),0)/T.length)},opct=()=>Math.round(SUBJ.reduce((a,s)=>a+spct(s.id),0)/SUBJ.length);
-let LU={tab:'learn',subj:null,topic:null,stage:0,alt:false,q:null,run:null,view:null,ps:{s:'math',lv:'auto'},sp:null,tut:{log:[],busy:false,err:false},planMsg:''};
-/* ---- question engine ---- */
-function prep(b){const q={...b,lv:b.l,tries:0,hints:0,done:false,bad:[]};
- if(b.k==='order'){let s=shf(b.o);if(JSON.stringify(s)===JSON.stringify(b.o))s=s.reverse();q.o=s;q.ord=[]}else if(b.k==='mc'){const m=shf(b.o.map((t,i)=>({t,c:i===b.a})));q.o=m.map(x=>x.t);q.a=m.findIndex(x=>x.c)}
- return fin3(q)}
-function fin3(q){const h=(q.h||[]).slice();if(h.length<3){if(q.k==='mc'){const w=q.o.filter((t,i)=>i!==q.a).slice(0,2);h.push(`It is not "${w[0]}" or "${w[1]}".`)}else if(q.k==='fill')h.push(`The answer has ${String(q.a).length} characters and starts with "${String(q.a)[0]}".`);else if(q.k==='order')h.push(`The first item is: "${q.a[0]}".`)}q.h=h;return q}
-function mkQ(s,t,lv,kinds){const g=GEN[s+'.'+t];if(g){const r=g(lv);return fin3({s,t,lv,l:lv,k:'fill',q:r.q,a:String(r.a),x:r.x,h:r.h,e:r.e,id:'g'+Math.random(),tries:0,hints:0,done:false,bad:[]})}
- const pool=BANK.filter(b=>b.s===s&&b.t===t&&(!kinds||kinds.includes(b.k)));if(!pool.length)return null;let c=pool.filter(b=>!LS.recent.includes(b.id));if(!c.length)c=pool;const d=b=>Math.abs(b.l-lv),m=Math.min(...c.map(d));return prep(pk(c.filter(b=>d(b)===m)))}
-function codeStage(){const T=SJ('code').T;for(let i=0;i<T.length;i++)if(TG('code',T[i].id).r<LCFG.codeUnlock)return i;return T.length-1}
-function nextQ(run){const sj=SJ(run.s);let q=null,n=0;while(!q&&n++<8){const tl=run.stage?[sj.T[codeStage()].id]:run.topics||sj.T.map(x=>x.id);run.t=pk(tl);q=mkQ(run.s,run.t,run.lv==='auto'?SG(run.s).lvl:run.lv,run.kinds)}return q}
-function chk(q,r){if(q.k==='fill'){const n=v=>String(v).trim().toLowerCase().replace(/\s+/g,''),a=n(q.a),b=n(r);if(!b)return false;if(a===b||(q.x||[]).some(v=>n(v)===b))return true;const num=/^-?\d+(\.\d+)?$/;return num.test(a)&&num.test(b)&&Math.abs(parseFloat(a)-parseFloat(b))<.01}
- if(q.k==='order')return JSON.stringify(r)===JSON.stringify(q.a);return r===q.a}
-function wrongMsg(q,r){if(q.k==='fill'){const a=parseFloat(q.a),b=parseFloat(r);if(!isNaN(a)&&!isNaN(b))return b>a?'Close, but your answer is a bit too high. Recheck your last step.':'Close, but your answer is a bit too low. Recheck your last step.';return 'Not quite. Check the spelling and the exact form the question asks for.'}
- if(q.k==='order'){let n=0;while(n<r.length&&r[n]===q.a[n])n++;return n?`The first ${n} item${n>1?'s are':' is'} in the right place. Rethink what comes next.`:'The order is not right yet. Start by finding what comes first.'}
- return 'That option does not fit. Re-read the question and test each choice.'}
-function rec(q,out){const sg=SG(q.s),tg=TG(q.s,q.t);LS.total++;tg.n++;let note='';
- if(out==='rev'){tg.w++}else{LS.correct++;tg.r++;const base=LCFG.stars[q.lv],st=out==='ok'?base:Math.max(1,Math.ceil(base*LCFG.retry));LS.stars+=st;q.award=st;if(out==='ok'){LS.streak++;LS.best=Math.max(LS.best,LS.streak);sg.run++;sg.wr=0}}
- if(sg.run>=LCFG.up&&sg.lvl<5){sg.lvl++;sg.run=0;note='Great streak! Next questions will be '+LCFG.levels[sg.lvl]+'.'}else if(sg.wr>=LCFG.down&&sg.lvl>0){sg.lvl--;sg.wr=0;note="Let's slow down a little. Next questions will be "+LCFG.levels[sg.lvl]+'.'}
- q.note=note;LS.recent.push(q.id);if(LS.recent.length>10)LS.recent.shift();ACH.forEach(a=>{if(!LS.ach[a.id]&&a.f(LS)){LS.ach[a.id]=1;toast('Achievement: '+a.n)}});lsave()}
-function answer(q,r){if(q.done)return;if(chk(q,r)){q.done=true;q.out=q.tries?'ok2':'ok';q.fb=pk(['Nice work!','Exactly right!','Great thinking!','You nailed it!']);rec(q,q.out);LB.submit(q,r);if(LU.run){LU.run.right++;LU.run.stars+=q.award||0}}
- else{q.tries++;if(q.tries===1){LS.streak=0;const g=SG(q.s);g.run=0;g.wr++;lsave()}if(q.k==='mc'||q.k==='tf')q.bad.push(r);if(q.hints<q.h.length)q.hints++;q.fb=wrongMsg(q,r);q.wrong=true}}
-function revealTxt(q){return q.k==='mc'||q.k==='tf'?q.o[q.a]:q.k==='order'?q.a.join(' → '):q.a}
-/* ---- UI ---- */
-const LT=[['learn','Learn','book'],['practice','Practice','target'],['mini','Mini Games','game'],['progress','Progress','bars'],['board','Leaderboard','trophy']];
-function drawLearn(){if(!$('#v'))return;const B={learn:tLearn,practice:tPractice,mini:tMini,progress:tProgress,board:tBoard}[LU.tab]();
- $('#v').innerHTML='<div class="pg lp"><div class="lh"><b style="font-size:20px">Mode Belajar</b><div class="row" style="gap:6px;flex-wrap:nowrap"><span class="lc">'+LI.star+fmtN(LS.stars)+'</span><span class="lc">'+LI.flame+LS.streak+'</span></div></div>'+B+'</div><nav class="ln" aria-label="Mode Belajar">'+LT.map(t=>'<button class="'+(LU.tab===t[0]?'on':'')+'" data-a="ltab" data-i="'+t[0]+'">'+LI[t[2]]+'<span>'+t[1]+'</span></button>').join('')+'</nav>'}
-const bk=()=>'<button class="g" data-a="lback" style="min-height:44px;margin-bottom:12px;display:inline-flex;align-items:center;gap:6px">'+LI.back+'Back</button>';
-const barH=p=>'<div class="bar"><i style="width:'+p+'%"></i></div>';
-function tLearn(){if(LU.view==='plan')return planUI();if(LU.topic)return lessonUI();if(LU.subj)return topicsUI();
- return '<p class="mt">Choose a subject and learn with your tutor.</p><div class="sg">'+SUBJ.map(s=>'<button class="sc" data-a="lsubj" data-i="'+s.id+'">'+LI[s.i]+'<b>'+s.n+'</b><span class="mt" style="font-size:12px">'+s.d+'</span>'+barH(spct(s.id))+'<span class="mt" style="font-size:12px">'+spct(s.id)+'% complete</span></button>').join('')+'</div><button class="g" style="width:100%;margin-top:12px;min-height:52px" data-a="lplan">Create a study plan</button>'}
-function topicsUI(){const s=SJ(LU.subj),nx=s.T.find(t=>tpct(s.id,t.id)<100);
- return bk()+'<div class="card"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><b style="font-size:18px">'+s.n+'</b><span class="tn">'+spct(s.id)+'%</span></div>'+barH(spct(s.id))+'<div class="mt" style="font-size:12px;margin-top:6px">'+s.T.filter(t=>tpct(s.id,t.id)>=100).length+' of '+s.T.length+' topics completed · Level: '+LCFG.levels[SG(s.id).lvl]+'</div></div>'
- +(nx?'<div class="card" style="border-color:var(--a)"><div class="mt" style="font-size:12px">Recommended next</div><b>'+nx.n+'</b><button type="button" data-a="ltopic" data-i="'+nx.id+'" style="width:100%;margin-top:10px;min-height:48px">Start lesson</button></div>':'<div class="card"><b>All topics mastered!</b><div class="mt">Try Practice or Mini Games to keep sharp.</div></div>')
- +s.T.map(t=>{const p=tpct(s.id,t.id),isCode=s.id==='code';return isCode?'<button type="button" class="tr learn-choice" data-a="ltopic" data-i="'+t.id+'" aria-label="Open '+esc(t.n)+' coding lesson"><div style="flex:1;min-width:0;text-align:left"><b>'+esc(t.n)+'</b><div class="mt" style="font-size:12px">'+LCFG.levels[t.lv]+' · '+p+'%'+(p>=100?' · Completed':'')+'</div>'+barH(p)+'</div><span aria-hidden="true">›</span></button>':'<div class="tr" data-a="ltopic" data-i="'+t.id+'"><div style="flex:1;min-width:0"><b>'+t.n+'</b><div class="mt" style="font-size:12px">'+LCFG.levels[t.lv]+' · '+p+'%'+(p>=100?' · Completed':'')+'</div>'+barH(p)+'</div></div>'}).join('')}
-const tutBub=t=>'<div class="tb" style="margin-bottom:10px"><div class="av">'+LI.book+'</div><div class="bub">'+t+'</div></div>';
-function lessonUI(){const s=SJ(LU.subj),t=TP(s.id,LU.topic),st=LU.stage,names=['Concept','Example','A bit harder','Your turn'];
- const msg=[`Hi! Let's learn <b>${esc(t.n)}</b> together. ${esc(t.x)}`,`Here is a simple example: ${esc(t.e1)}`,`Now a slightly harder one: ${esc(t.e2)}`][st];
- let h=bk()+'<div class="card"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><b>'+esc(t.n)+'</b><span class="st">'+names[st]+'</span></div><div class="dots2">'+names.map((n,i)=>'<i class="'+(i<=st?'on':'')+'"></i>').join('')+'</div>';
- if(st<3){h+=tutBub(msg)+(LU.alt?tutBub('Let me explain it another way: '+esc(t.alt)):'')+'<div class="row"><button class="g" data-a="lalt" style="min-height:48px">'+(LU.alt?'Hide other explanation':"I don't get it")+'</button><button data-a="lstage" style="min-height:48px;flex:1">'+(st===2?"I'm ready for a question":'Next')+'</button></div>'}
- else{h+=tutBub('Your turn! Take your time. Hints are there if you need them.')+qUI()+(LU.alt?tutBub('Another way to see it: '+esc(t.alt)):'')+'<button class="g" data-a="lalt" style="min-height:44px;margin-top:6px">'+(LU.alt?'Hide other explanation':'Explain it differently')+'</button>'}
- h+='</div>';const T=LU.tut;
- h+='<div class="card"><b>Ask your tutor</b><div class="mt" style="font-size:12px;margin-bottom:8px">AI answers use your Vyrnexa Tokens.</div>'+T.log.map(m=>m.r==='u'?'<div class="m u" style="margin:6px 0">'+esc(m.t)+'</div>':tutBub(md(m.t))).join('')+(T.busy?tutBub('<span class="dots"><span></span><span></span><span></span></span>'):'')+(T.err?'<div class="fb no">Your tutor could not answer right now. Check your connection and try again. <button class="g" data-a="tretry" style="min-height:40px;margin-top:6px">Try again</button></div>':'')+'<div class="row" style="flex-wrap:nowrap;margin-top:8px"><input id="tin" class="grow" placeholder="Ask about this topic" autocomplete="off" style="min-width:0"><button data-a="task" style="min-height:48px">Send</button></div></div>';return h}
-function qUI(){const q=LU.q;if(!q)return '<div class="fb"><b>No quiz available yet</b><div class="mt">There are no questions for this topic right now. Try another topic.</div></div>';
- const [l0,...rest]=q.q.split('\n');let h='<div class="row" style="margin:8px 0"><span class="st">'+esc(SJ(q.s).n)+'</span><span class="st">'+esc(TP(q.s,q.t)?TP(q.s,q.t).n:'')+'</span><span class="st">'+LCFG.levels[q.lv]+'</span></div><p style="font-size:17px;margin:8px 0">'+esc(l0)+'</p>'+(rest.length?'<pre class="mono card" style="padding:10px;margin:0 0 10px">'+esc(rest.join('\n'))+'</pre>':'');
- if(q.k==='mc'||q.k==='tf')h+=q.o.map((o,i)=>'<button class="opt'+(q.done&&i===q.a?' ok':'')+(q.bad.includes(i)?' no':'')+'" data-a="lans" data-i="'+i+'"'+(q.done?' disabled':'')+'>'+esc(o)+'</button>').join('');
- else if(q.k==='fill')h+='<div class="row" style="flex-wrap:nowrap"><input id="lf" class="grow" autocomplete="off" placeholder="Your answer" style="min-width:0"'+(q.done?' disabled':'')+'><button data-a="lfill" style="min-height:48px"'+(q.done?' disabled':'')+'>Check</button></div>';
- else{h+='<div class="oz">'+(q.ord.length?q.ord.map((x,i)=>'<button class="oc" data-a="lun" data-i="'+i+'"'+(q.done?' disabled':'')+'>'+esc(x)+'</button>').join(''):'<span class="mt">Tap the items in the correct order</span>')+'</div>'+q.o.map((x,i)=>q.ord.includes(x)?'':'<button class="oc" data-a="lord" data-i="'+i+'"'+(q.done?' disabled':'')+'>'+esc(x)+'</button>').join('')+(q.done?'':'<div class="row" style="margin-top:6px"><button class="g" data-a="lrst" style="min-height:44px">Reset</button><button data-a="lochk" style="min-height:44px"'+(q.ord.length<q.o.length?' disabled':'')+'>Check order</button></div>')}
- h+=q.h.slice(0,q.hints).map((x,i)=>'<div class="hint"><b>Hint '+(i+1)+'</b> · '+esc(x)+'</div>').join('');
- if(q.fb)h+='<div class="fb '+(q.done?'ok':'no')+'">'+(q.done?'<b>'+esc(q.fb)+'</b> '+(q.out==='rev'?'':'+'+q.award+' Stars')+'':esc(q.fb))+'</div>';
- if(q.done){h+='<div class="mt" style="margin:6px 0">'+(q.out==='rev'?'The answer is <b>'+esc(revealTxt(q))+'</b>. ':'')+esc(q.e||'')+'</div>'+(q.note?'<div class="hint">'+esc(q.note)+'</div>':'')+'<button data-a="lnext" style="width:100%;min-height:52px;margin-top:8px">'+nextLbl()+'</button>'}
- else h+='<div class="row" style="margin-top:8px"><button class="g" data-a="lhint" style="min-height:44px"'+(q.hints>=q.h.length?' disabled':'')+'>Hint ('+q.hints+'/'+q.h.length+')</button><button class="g" data-a="lrev" style="min-height:44px">Show answer</button></div>';return h}
-function nextLbl(){const r=LU.run;return r&&r.rounds&&r.i>=r.rounds?'See results':'Next question'}
-function runHead(){const r=LU.run;return '<div class="row" style="justify-content:space-between;margin-bottom:8px"><span class="lc">'+(r.rounds?'Question '+Math.min(r.i,r.rounds)+' / '+r.rounds:'Question '+r.i)+'</span>'+(r.stage?'<span class="lc">Stage '+(codeStage()+1)+' / '+SJ('code').T.length+' · '+esc(SJ('code').T[codeStage()].n)+'</span>':'')+'</div>'}
-function tPractice(){const r=LU.run;if(r&&r.mode==='practice'){return '<div class="card">'+runHead()+qUI()+'</div><button class="g" data-a="lend" style="width:100%;min-height:48px">End session</button>'}
- const p=LU.ps;return '<p class="mt">Pick a subject and difficulty, then practice with hints when you need them.</p><div class="mt" style="font-size:12px;margin:8px 0 4px">Subject</div><div class="row" style="margin-bottom:8px">'+SUBJ.map(s=>'<button class="chp'+(p.s===s.id?' on':'')+'" data-a="lps" data-i="'+s.id+'">'+s.n+'</button>').join('')+'</div><div class="mt" style="font-size:12px;margin:8px 0 4px">Difficulty (Stars per correct answer)</div><div class="row" style="margin-bottom:12px"><button class="chp'+(p.lv==='auto'?' on':'')+'" data-a="lpl" data-i="auto">Auto</button>'+LCFG.levels.map((n,i)=>'<button class="chp'+(p.lv===i?' on':'')+'" data-a="lpl" data-i="'+i+'">'+n+' · '+LCFG.stars[i]+'</button>').join('')+'</div><button data-a="lpstart" style="width:100%;min-height:54px">Start practice</button>'}
-function tMini(){const r=LU.run,sp=LU.sp;if(sp)return spUI();if(r&&r.mode==='mini'){if(r.fin)return '<div class="card" style="text-align:center"><h3>'+esc(r.n)+' complete</h3><p style="font-size:28px;margin:4px 0"><b>'+r.right+' / '+r.rounds+'</b></p><p class="mt">+'+r.stars+' Stars earned</p><button data-a="lmg" data-i="'+r.id+'" style="width:100%;min-height:50px">Play again</button><button class="g" data-a="lend" style="width:100%;min-height:48px;margin-top:8px">Back to games</button></div>';
-  return '<div class="card"><b>'+esc(r.n)+'</b>'+runHead()+qUI()+'</div><button class="g" data-a="lend" style="width:100%;min-height:48px">Quit game</button>'}
- return '<p class="mt">Quick, lightweight games. Correct answers earn Stars.</p>'+MG.map(g=>g.id==='code'?'<button type="button" class="tr learn-choice" data-a="lmg" data-i="'+g.id+'" aria-label="Play Coding Challenge"><span style="color:var(--a)">'+LI[SJ(g.s).i]+'</span><div style="flex:1;min-width:0;text-align:left"><b>'+esc(g.n)+'</b><div class="mt" style="font-size:12px">'+esc(g.d)+'</div></div><span aria-hidden="true">›</span></button>':'<div class="tr" data-a="lmg" data-i="'+g.id+'"><span style="color:var(--a)">'+LI[SJ(g.s).i]+'</span><div style="flex:1;min-width:0"><b>'+g.n+'</b><div class="mt" style="font-size:12px">'+g.d+(g.sp&&LS.mini.speed?' · Best '+LS.mini.speed:'')+'</div></div></div>').join('')}
-function spUI(){const s=LU.sp;if(s.over)return '<div class="card" style="text-align:center"><h3>Time is up</h3><p style="font-size:28px;margin:4px 0"><b>'+s.score+'</b> correct</p><p class="mt">Best '+(LS.mini.speed||0)+' · +'+s.stars+' Stars earned</p><button data-a="lspeed" style="width:100%;min-height:50px">Play again</button><button class="g" data-a="lend" style="width:100%;min-height:48px;margin-top:8px">Back to games</button></div>';
- return '<div class="card"><div class="row" style="justify-content:space-between"><span class="lc">Score '+s.score+'</span><span class="lc" id="spt">'+s.left+'s</span></div><div style="font-size:30px;text-align:center;margin:20px 0">'+esc(s.q.q.replace('What is ','').replace('?',''))+' = ?</div><input id="lf" inputmode="numeric" autocomplete="off" placeholder="Answer" style="width:100%"><button data-a="lspa" style="width:100%;min-height:52px;margin-top:10px">Check</button></div><button class="g" data-a="lend" style="width:100%;min-height:48px">Quit</button>'}
-function tProgress(){if(!LS.total)return '<div class="card" style="text-align:center"><b>No progress yet</b><p class="mt">Finish a lesson, practice question or mini-game to see your progress here.</p><button data-a="ltab" data-i="learn" style="min-height:48px">Start learning</button></div>';
- return '<div class="card"><div class="row" style="justify-content:space-between"><b>Overall progress</b><span class="tn">'+opct()+'%</span></div>'+barH(opct())+'</div><div class="sg" style="margin-bottom:12px">'+[['Questions',LS.total],['Correct',LS.correct],['Stars',fmtN(LS.stars)],['Streak',LS.streak+' (best '+LS.best+')']].map(x=>'<div class="card" style="margin:0;text-align:center"><div class="mt" style="font-size:12px">'+x[0]+'</div><b style="font-size:20px">'+x[1]+'</b></div>').join('')+'</div>'
- +SUBJ.map(s=>'<div class="card"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><b>'+s.n+'</b><span class="tn">'+spct(s.id)+'%</span></div>'+barH(spct(s.id))+s.T.map(t=>'<div class="row" style="justify-content:space-between;flex-wrap:nowrap;font-size:12px;margin-top:6px"><span class="mt">'+t.n+'</span><span class="tn">'+tpct(s.id,t.id)+'%</span></div>').join('')+'</div>').join('')
- +'<div class="card"><b>Achievements</b>'+ACH.map(a=>'<div class="row" style="justify-content:space-between;flex-wrap:nowrap;margin-top:6px"><span>'+a.n+'</span><span class="st '+(LS.ach[a.id]?'COMPLETED':'')+'">'+(LS.ach[a.id]?'Unlocked':'Locked')+'</span></div>').join('')+'</div>'}
-function tBoard(){if(LB.url()&&!LB.busy&&!LB.loadedAt)LB.load();return '<div class="card"><div class="mt" style="font-size:12px">Your name</div><input id="lname" value="'+esc(LS.name)+'" maxlength="20" style="width:100%;margin:6px 0 10px"><div class="row" style="justify-content:space-between"><span>Your Stars</span><b>'+fmtN(LS.stars)+'</b></div><div class="row" style="justify-content:space-between"><span>Your rank</span><b>'+(LB.me&&LB.me.rank?'#'+fmtN(LB.me.rank):'Not ranked yet')+'</b></div>'+(LB.url()?'<button class="g" data-a="lbrefresh" style="width:100%;margin-top:8px">'+(LB.busy?'Refreshing…':'Refresh leaderboard')+'</button>':'')+'</div>'+(LB.err?'<div class="card"><span class="st ERROR">LEADERBOARD ERROR</span><p class="mt">'+esc(LB.err)+'</p></div>':'')+(LB.rows.length?'<div class="card"><b>Global Top 50</b>'+LB.rows.map((r,i)=>'<div class="row" style="justify-content:space-between;flex-wrap:nowrap;margin:6px 0"><span>#'+(i+1)+' '+esc(r.name)+'</span><b>'+fmtN(r.stars)+'</b></div>').join('')+'</div>':'<div class="card" style="text-align:center"><b>'+(LB.url()?'No leaderboard entries yet':'Global leaderboard is ready to connect')+'</b><p class="mt">'+(LB.url()?'Earn Stars and refresh to see the server-validated ranking.':'Set the learning leaderboard endpoint in Developer. The server must validate each answer and calculate Stars.')+'</p></div>')}
-function planUI(){const p=LS.plan;return bk()+'<div class="card"><b>Study plan</b><p class="mt" style="font-size:13px">Try: "Learn JavaScript basics in 14 days" or "Master fractions in 5 days".</p><div class="row" style="flex-wrap:nowrap"><input id="pin" class="grow" placeholder="What do you want to learn?" style="min-width:0"><button data-a="pgen" style="min-height:48px">Create</button></div>'+(LU.planMsg?'<div class="fb no">'+esc(LU.planMsg)+'</div>':'')+'</div>'
- +(p?'<div class="card"><div class="row" style="justify-content:space-between"><b>'+esc(p.title)+'</b><span class="tn">'+p.days.filter(d=>d.done).length+' / '+p.days.length+'</span></div>'+barH(Math.round(p.days.filter(d=>d.done).length/p.days.length*100))+p.days.map((d,i)=>'<div class="tr" style="margin:8px 0 0"><button class="chp'+(d.done?' on':'')+'" data-a="pday" data-i="'+i+'" style="min-width:48px" aria-label="Mark day '+(i+1)+'">'+(d.done?'Done':'Day '+(i+1))+'</button><div style="flex:1;min-width:0">'+esc(d.label)+'</div><button class="g" data-a="pgo" data-i="'+i+'" style="min-height:40px">Open</button></div>').join('')+'</div>':'')}
-function makePlan(txt){const t=txt.toLowerCase(),m=t.match(/(\d+)\s*(day|hari)/),days=Math.min(30,Math.max(2,m?+m[1]:7)),map={math:/math|matem|fraction|algebra/,eng:/english|inggris|grammar/,code:/cod|javascript|js\b|program/,geo:/geo/,logic:/logic|logika/,phys:/phys|fisika/,chem:/chem|kimia/,hist:/hist|sejarah/},sid=Object.keys(map).find(k=>map[k].test(t));if(!sid)return null;const sj=SJ(sid),n=sj.T.length,d=[];
- for(let i=0;i<days;i++){const ti=Math.min(n-1,Math.floor(i*n/days)),first=i===0||Math.floor((i-1)*n/days)!==ti;d.push({s:sid,t:sj.T[ti].id,label:i===days-1&&days>n?'Final review quiz: '+sj.n:(first?'Learn: ':'Practice: ')+sj.T[ti].n,done:false})}return{title:txt.slice(0,60),sid,days:d}}
-/* tutor: free-text questions go through the existing AI pipeline (guard -> provider -> chargeAI). Static lessons and quiz mechanics are local and free. */
-async function askTutor(t){const tp=TP(LU.subj,LU.topic),T=LU.tut;T.log.push({r:'u',t});T.busy=true;T.err=false;T.last=t;drawLearn();const full='Topic: '+tp.n+' ('+SJ(LU.subj).n+'). Learner asks: '+t;
- if(!await guard(full)){T.busy=false;T.log.pop();drawLearn();return}
- let out='',usage=null,fail=false;try{for await(const ch of providers.demo.stream([{role:'system',content:'You are Vyrnexa Tutor, a friendly teacher. Explain step by step and ask a check question.'},{role:'user',content:full}],{files:[],meta:[],atts:[]},{stop:false})){if(ch&&typeof ch==='object'){if(ch.usage)usage=ch.usage;continue}out+=ch}}catch(e){fail=true;errs.push(e.message)}
- T.busy=false;if(fail||!out.trim())T.err=true;else{T.log.push({r:'a',t:out});chargeAI(TK.est(full),TK.est(out),usage)}drawLearn()}
-function startRun(cfg){LU.run={...cfg,i:1,right:0,stars:0};LU.q=nextQ(LU.run);LU.sp=null}
-function endSpeed(){const s=LU.sp;if(!s||s.over)return;clearInterval(s.iv);s.over=true;s.stars=Math.floor(s.score/LCFG.speedPer);LS.stars+=s.stars;LS.mini.speed=Math.max(LS.mini.speed||0,s.score);lsave();if(V==='learn'&&LU.tab==='mini')drawLearn()}
-function newSp(){const g=pk([GEN['math.add'](1),GEN['math.mul'](0)]);return{q:g.q,a:String(g.a)}}
-const focusF=()=>{const f=$('#lf');if(f)f.focus()};
-Object.assign(H,{
- ltab(el){if(LU.sp)clearInterval(LU.sp.iv);LU.tab=el.dataset.i;LU.run=null;LU.q=null;LU.sp=null;drawLearn();$('#v').scrollTop=0},
- lsubj(el){LU.subj=el.dataset.i;LU.topic=null;drawLearn();$('#v').scrollTop=0},
- lback(){if(LU.view)LU.view=null;else if(LU.topic){LU.topic=null;LU.q=null;LU.run=null}else LU.subj=null;drawLearn();$('#v').scrollTop=0},
- ltopic(el){LU.topic=el.dataset.i;LU.stage=0;LU.alt=false;LU.q=null;LU.run=null;LU.tut={log:[],busy:false,err:false};LU.view=null;drawLearn();$('#v').scrollTop=0},
- lalt(){LU.alt=!LU.alt;drawLearn()},
- lstage(){LU.stage++;if(LU.stage===3){startRun({mode:'learn',s:LU.subj,lv:'auto',topics:[LU.topic]})}drawLearn()},
- lans(el){if(LU.q){answer(LU.q,+el.dataset.i);drawLearn()}},
- lfill(){const f=$('#lf');if(!LU.q||!f)return;if(!f.value.trim()){toast('Type your answer first');return}answer(LU.q,f.value);drawLearn();if(!LU.q.done)focusF()},
- lord(el){const q=LU.q;if(q&&!q.done){q.ord.push(q.o[+el.dataset.i]);drawLearn()}},lun(el){const q=LU.q;if(q&&!q.done){q.ord.splice(+el.dataset.i,1);drawLearn()}},lrst(){if(LU.q){LU.q.ord=[];drawLearn()}},lochk(){if(LU.q){answer(LU.q,LU.q.ord.slice());if(LU.q.wrong&&!LU.q.done)LU.q.ord=[];drawLearn()}},
- lhint(){const q=LU.q;if(q&&q.hints<q.h.length){q.hints++;drawLearn()}},
- lrev(){const q=LU.q;if(!q||q.done)return;q.done=true;q.out='rev';q.fb='Here is the answer. Study it, then try the next one.';LS.streak=0;rec(q,'rev');drawLearn()},
- lnext(){const r=LU.run;if(!r)return;if(r.mode==='mini'&&r.i>=r.rounds){r.fin=true;LU.q=null;drawLearn();return}r.i++;LU.q=nextQ(r);drawLearn();$('#v').scrollTop=0},
- lend(){if(LU.sp)clearInterval(LU.sp.iv);LU.run=null;LU.q=null;LU.sp=null;drawLearn()},
- lps(el){LU.ps.s=el.dataset.i;drawLearn()},lpl(el){LU.ps.lv=el.dataset.i==='auto'?'auto':+el.dataset.i;drawLearn()},
- lpstart(){startRun({mode:'practice',s:LU.ps.s,lv:LU.ps.lv});drawLearn()},
- lmg(el){const g=MG.find(x=>x.id===el.dataset.i);if(g.sp){H.lspeed();return}startRun({mode:'mini',id:g.id,n:g.n,s:g.s,topics:g.topics,stage:g.stage,lv:'auto',rounds:LCFG.rounds});drawLearn()},
- lspeed(){if(LU.sp)clearInterval(LU.sp.iv);const s=LU.sp={left:LCFG.speedTime,score:0,stars:0,over:false,q:newSp()};s.iv=setInterval(()=>{s.left--;const t=$('#spt');if(t)t.textContent=s.left+'s';if(s.left<=0)endSpeed()},1000);LU.run=null;drawLearn();focusF()},
- lspa(){const s=LU.sp,f=$('#lf');if(!s||s.over||!f||!f.value.trim())return;LS.total++;if(chk({k:'fill',a:s.q.a},f.value)){s.score++;LS.correct++}lsave();s.q=newSp();drawLearn();focusF()},
- lplan(){LU.view='plan';LU.planMsg='';drawLearn();$('#v').scrollTop=0},
- pgen(){const t=($('#pin')||{}).value||'',p=t.trim()&&makePlan(t);if(!p){LU.planMsg=t.trim()?'Mention a subject, for example "Learn JavaScript basics in 14 days".':'Tell me what you want to learn.';drawLearn();return}LS.plan=p;LU.planMsg='';lsave();drawLearn()},
- pday(el){const d=LS.plan.days[+el.dataset.i];d.done=!d.done;lsave();drawLearn()},
- pgo(el){const d=LS.plan.days[+el.dataset.i];LU.tab='learn';LU.view=null;LU.subj=d.s;H.ltopic({dataset:{i:d.t}})},
- lbrefresh(){LB.loadedAt=0;LB.load(true)},task(){const i=$('#tin'),t=i&&i.value.trim();if(t&&!LU.tut.busy)askTutor(t)},tretry(){if(LU.tut.last&&!LU.tut.busy){LU.tut.log.pop();askTutor(LU.tut.last)}}});
-document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='lf'){e.preventDefault();LU.sp&&!LU.sp.over?H.lspa():H.lfill()}if(e.target.id==='tin'){e.preventDefault();H.task()}if(e.target.id==='pin'){e.preventDefault();H.pgen()}});
-document.addEventListener('change',e=>{if(e.target.id==='lname'){LS.name=e.target.value.trim().slice(0,20)||'Learner';lsave()}});
-document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(el&&H[el.dataset.a])H[el.dataset.a](el)});
-document.addEventListener('input',e=>{const t=e.target;if(t.id==='q')drawList();if(t.id==='notes'){P().notes=t.value;save()}if(t.id==='task')A.task=t.value;if(t.id==='sq'){SR.q=t.value;const i=$('#si');if(i)i.textContent=intentTxt()}});
-document.addEventListener('change',e=>{if(e.target.id==='sm')SR.mode=e.target.value;const k=e.target.dataset.k;if(k){S.set[k]=e.target.type==='range'||e.target.type==='number'?+e.target.value:e.target.value;if(k==='temp'&&$('#tv'))$('#tv').textContent=S.set.temp;save()}});
-addEventListener('keydown',e=>{if(e.key==='Escape'){H.close();closeStore()}});
-draw();
-</script></body></html>
+
+let state = {
+  chats: [],
+  currentChat: null,
+  memories: [],
+  projects: [
+    {id:"default",name:"General",description:"Default Vyrnexa project"}
+  ],
+  settings:{
+    theme:"dark",
+    temperature:.7
+  },
+  lab:{...DEFAULT_LAB}
+};
+
+let labTab = "html";
+let labLogs = [];
+let labRunning = false;
+
+try{
+  const saved = JSON.parse(localStorage.getItem("vyrnexa_state"));
+  if(saved){
+    state = {
+      ...state,
+      ...saved,
+      settings:{
+        ...state.settings,
+        ...(saved.settings||{})
+      },
+      lab:{
+        ...DEFAULT_LAB,
+        ...(saved.lab||{})
+      }
+    };
+  }
+}catch(e){}
+
+function save(){
+  localStorage.setItem(
+    "vyrnexa_state",
+    JSON.stringify(state)
+  );
+}
+
+function $(id){
+  return document.getElementById(id);
+}
+
+function escapeHTML(text){
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
+
+function toast(text){
+  const t=$("toast");
+  t.textContent=text;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),1800);
+}
+
+function currentChat(){
+  return state.chats.find(
+    c=>c.id===state.currentChat
+  );
+}
+
+function createChat(){
+  const chat={
+    id:crypto.randomUUID(),
+    title:"New Chat",
+    messages:[],
+    created:Date.now()
+  };
+
+  state.chats.unshift(chat);
+  state.currentChat=chat.id;
+  save();
+  renderChatList();
+  renderChat();
+}
+
+function renderChatList(){
+  const box=$("chatList");
+
+  if(!state.chats.length){
+    box.innerHTML=
+      '<div style="color:var(--muted);padding:12px">No chats yet.</div>';
+    return;
+  }
+
+  box.innerHTML=state.chats.map(chat=>`
+    <div class="chatItem ${chat.id===state.currentChat?"active":""}"
+         data-chat="${chat.id}">
+      <span class="chatTitle">${escapeHTML(chat.title)}</span>
+      <button class="chatDelete" data-delete-chat="${chat.id}">×</button>
+    </div>
+  `).join("");
+}
+
+function renderChat(){
+  $("pageTitle").textContent="Vyrnexa AI";
+  $("composer").style.display="block";
+
+  const chat=currentChat();
+
+  if(!chat){
+    $("page").innerHTML=`
+      <div class="empty">
+        <h1>Vyrnexa AI</h1>
+        <p>Your connected AI workspace.</p>
+        <button class="primary" id="startChat">Start Chat</button>
+      </div>
+    `;
+
+    $("startChat").onclick=createChat;
+    return;
+  }
+
+  $("page").innerHTML=`
+    <div id="messages"></div>
+  `;
+
+  const messages=$("messages");
+
+  if(!chat.messages.length){
+    messages.innerHTML=`
+      <div class="empty">
+        <h1>Hello.</h1>
+        <p>I'm Vyrnexa. What do you want to build?</p>
+      </div>
+    `;
+    return;
+  }
+
+  chat.messages.forEach(m=>{
+    const el=document.createElement("div");
+    el.className="message "+m.role;
+
+    el.innerHTML=`
+      <div class="bubble">${escapeHTML(m.content)}</div>
+      <div class="meta">${m.role==="user"?"You":"Vyrnexa"}</div>
+    `;
+
+    messages.appendChild(el);
+  });
+
+  requestAnimationFrame(()=>{
+    $("page").scrollTop=$("page").scrollHeight;
+  });
+}
+
+async function sendMessage(){
+  const input=$("prompt");
+  const text=input.value.trim();
+
+  if(!text)return;
+
+  if(!currentChat())createChat();
+
+  const chat=currentChat();
+
+  if(chat.title==="New Chat"){
+    chat.title=text.slice(0,40);
+  }
+
+  chat.messages.push({
+    role:"user",
+    content:text
+  });
+
+  input.value="";
+  save();
+  renderChat();
+  renderChatList();
+
+  const loading=document.createElement("div");
+  loading.className="message assistant";
+  loading.innerHTML=
+    '<div class="bubble">Thinking...</div>';
+  $("messages").appendChild(loading);
+
+  try{
+
+    const response=await fetch(ENDPOINT,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json"
+      },
+      body:JSON.stringify({
+        messages:chat.messages,
+        temperature:Number(state.settings.temperature)||.7
+      })
+    });
+
+    const data=await response.json();
+
+    if(!response.ok){
+      throw new Error(
+        data.error||"API request failed"
+      );
+    }
+
+    const answer=data.text||"No response received.";
+
+    chat.messages.push({
+      role:"assistant",
+      content:answer
+    });
+
+    save();
+    renderChat();
+
+  }catch(error){
+
+    loading.innerHTML=`
+      <div class="bubble" style="border-color:var(--danger)">
+        Error: ${escapeHTML(error.message)}
+      </div>
+    `;
+
+    toast("Vyrnexa API error");
+  }
+}
+
+function buildLabDocument(){
+
+  return `<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+${state.lab.css}
+</style>
+</head>
+
+<body>
+${state.lab.html}
+
+<script>
+(function(){
+
+  function report(type,args){
+
+    parent.postMessage({
+      vyrnexaLab:true,
+      type:type,
+      message:Array.from(args)
+        .map(x=>{
+          try{return typeof x==="string"
+            ?x
+            :JSON.stringify(x)}
+          catch(e){return String(x)}
+        })
+        .join(" ")
+    },"*");
+  }
+
+  ["log","info","warn","error"].forEach(type=>{
+    const original=console[type];
+
+    console[type]=function(){
+      report(type,arguments);
+      original.apply(console,arguments);
+    };
+  });
+
+  window.onerror=function(message,source,line){
+    report(
+      "error",
+      [message+" (line "+line+")"]
+    );
+  };
+
+})();
+<\/script>
+
+<script>
+${state.lab.js}
+<\/script>
+
+</body>
+</html>`;
+}
+
+function renderCodingLab(){
+
+  $("pageTitle").textContent="Coding Lab";
+  $("composer").style.display="none";
+
+  $("page").innerHTML=`
+    <div class="pageInner">
+
+      <div class="card">
+        <h2 style="margin-top:0">Coding Lab</h2>
+        <p style="color:var(--muted)">
+          Build and test HTML, CSS and JavaScript.
+        </p>
+
+        <div class="tabs" id="labTabs">
+          ${[
+            ["html","HTML"],
+            ["css","CSS"],
+            ["js","JavaScript"],
+            ["console","Console"],
+            ["preview","Preview"]
+          ].map(([id,name])=>`
+            <button
+              type="button"
+              class="${labTab===id?"active":""}"
+              data-lab-tab="${id}">
+              ${name}
+            </button>
+          `).join("")}
+        </div>
+
+        <div id="labContent"></div>
+
+        <div class="row" style="margin-top:10px">
+          <button class="primary" id="runLab">Run</button>
+          <button class="secondary" id="resetLab">Reset</button>
+          <button class="secondary" id="clearConsole">Clear Console</button>
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  renderLabContent();
+
+  document
+    .querySelectorAll("[data-lab-tab]")
+    .forEach(button=>{
+
+      button.addEventListener("click",()=>{
+
+        labTab=button.dataset.labTab;
+
+        save();
+
+        renderCodingLab();
+
+      });
+
+    });
+
+  $("runLab").onclick=runLab;
+
+  $("resetLab").onclick=()=>{
+    state.lab={...DEFAULT_LAB};
+    labLogs=[];
+    save();
+    renderCodingLab();
+  };
+
+  $("clearConsole").onclick=()=>{
+    labLogs=[];
+    renderCodingLab();
+  };
+}
+
+function renderLabContent(){
+
+  const box=$("labContent");
+
+  if(labTab==="html"||
+     labTab==="css"||
+     labTab==="js"){
+
+    box.innerHTML=`
+      <textarea
+        id="labEditor"
+        spellcheck="false"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+      ></textarea>
+    `;
+
+    const editor=$("labEditor");
+
+    editor.value=state.lab[labTab];
+
+    editor.addEventListener("input",()=>{
+      state.lab[labTab]=editor.value;
+      save();
+    });
+
+    return;
+  }
+
+  if(labTab==="console"){
+
+    box.innerHTML=`
+      <div class="console">
+        ${
+          labLogs.length
+          ?labLogs.map(x=>
+            `<div class="${x.type}">
+              [${escapeHTML(x.type)}] ${escapeHTML(x.message)}
+            </div>`
+          ).join("")
+          :"Console is empty. Press Run."
+        }
+      </div>
+    `;
+
+    return;
+  }
+
+  if(labTab==="preview"){
+
+    box.innerHTML=`
+      <iframe
+        id="preview"
+        sandbox="allow-scripts"
+        title="Vyrnexa Coding Lab Preview">
+      </iframe>
+    `;
+
+    $("preview").srcdoc=buildLabDocument();
+  }
+}
+
+function runLab(){
+
+  labLogs=[];
+  labRunning=true;
+
+  labTab="preview";
+
+  renderCodingLab();
+
+  const frame=$("preview");
+
+  if(!frame)return;
+
+  frame.srcdoc=buildLabDocument();
+
+  toast("Coding Lab running");
+}
+
+window.addEventListener("message",event=>{
+
+  if(
+    !event.data||
+    event.data.vyrnexaLab!==true
+  )return;
+
+  labLogs.push({
+    type:event.data.type||"log",
+    message:String(event.data.message||"")
+  });
+
+  if(labTab==="console"){
+    renderCodingLab();
+  }
+});
+
+function renderMemory(){
+
+  $("pageTitle").textContent="Memory";
+  $("composer").style.display="none";
+
+  $("page").innerHTML=`
+    <div class="pageInner">
+
+      <div class="card">
+        <h2>Memory</h2>
+
+        <textarea
+          id="memoryInput"
+          placeholder="Add something Vyrnexa should remember..."
+        ></textarea>
+
+        <button class="primary" id="addMemory"
+                style="margin-top:8px">
+          Save Memory
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>Saved Memories</h3>
+
+        ${
+          state.memories.length
+          ?state.memories.map((m,i)=>`
+            <div class="project">
+              ${escapeHTML(m)}
+              <button
+                class="secondary danger"
+                data-memory="${i}"
+                style="float:right">
+                Delete
+              </button>
+            </div>
+          `).join("")
+          :'<p style="color:var(--muted)">No memories yet.</p>'
+        }
+      </div>
+
+    </div>
+  `;
+
+  $("addMemory").onclick=()=>{
+    const value=$("memoryInput").value.trim();
+
+    if(!value)return;
+
+    state.memories.push(value);
+    save();
+    renderMemory();
+  };
+
+  document
+    .querySelectorAll("[data-memory]")
+    .forEach(btn=>{
+      btn.onclick=()=>{
+        state.memories.splice(
+          Number(btn.dataset.memory),1
+        );
+        save();
+        renderMemory();
+      };
+    });
+}
+
+function renderProjects(){
+
+  $("pageTitle").textContent="Projects";
+  $("composer").style.display="none";
+
+  $("page").innerHTML=`
+    <div class="pageInner">
+
+      <div class="card">
+        <h2>Projects</h2>
+
+        <input
+          id="projectName"
+          placeholder="Project name"
+        >
+
+        <button
+          class="primary"
+          id="createProject"
+          style="margin-top:8px">
+          Create Project
+        </button>
+      </div>
+
+      <div class="card">
+
+        ${
+          state.projects.map(p=>`
+            <div class="project">
+              <b>${escapeHTML(p.name)}</b>
+              <small>${escapeHTML(p.description||"")}</small>
+            </div>
+          `).join("")
+        }
+
+      </div>
+
+    </div>
+  `;
+
+  $("createProject").onclick=()=>{
+    const name=$("projectName").value.trim();
+
+    if(!name)return;
+
+    state.projects.push({
+      id:crypto.randomUUID(),
+      name:name,
+      description:"Vyrnexa project"
+    });
+
+    save();
+    renderProjects();
+  };
+}
+
+function renderSettings(){
+
+  $("pageTitle").textContent="Settings";
+  $("composer").style.display="none";
+
+  $("page").innerHTML=`
+    <div class="pageInner">
+
+      <div class="card">
+
+        <h2>Settings</h2>
+
+        <div class="setting">
+          <span>Theme</span>
+          <select id="themeSelect">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+        </div>
+
+        <div class="setting">
+          <span>Temperature</span>
+          <input
+            id="tempSelect"
+            type="number"
+            min="0"
+            max="2"
+            step=".1"
+            style="width:100px">
+        </div>
+
+      </div>
+
+      <div class="card">
+        <h3>Storage</h3>
+        <p style="color:var(--muted)">
+          Chats, memory and Coding Lab data are saved
+          locally on this device.
+        </p>
+
+        <button class="danger secondary" id="wipeData">
+          Erase Local Data
+        </button>
+      </div>
+
+    </div>
+  `;
+
+  $("themeSelect").value=state.settings.theme;
+  $("tempSelect").value=state.settings.temperature;
+
+  $("themeSelect").onchange=e=>{
+    state.settings.theme=e.target.value;
+    applyTheme();
+    save();
+  };
+
+  $("tempSelect").onchange=e=>{
+    state.settings.temperature=
+      Math.max(
+        0,
+        Math.min(2,Number(e.target.value)||.7)
+      );
+    save();
+  };
+
+  $("wipeData").onclick=()=>{
+    if(confirm("Erase all Vyrnexa local data?")){
+      localStorage.removeItem("vyrnexa_state");
+      location.reload();
+    }
+  };
+}
+
+function renderDashboard(){
+
+  $("pageTitle").textContent="Vyrnexa AI";
+  $("composer").style.display="none";
+
+  $("page").innerHTML=`
+    <div class="pageInner">
+
+      <div class="card">
+        <h1>Vyrnexa AI</h1>
+        <p style="color:var(--muted)">
+          Your personal AI workspace.
+        </p>
+      </div>
+
+      <div class="stat">
+
+        <div class="statBox">
+          Chats
+          <b>${state.chats.length}</b>
+        </div>
+
+        <div class="statBox">
+          Memories
+          <b>${state
