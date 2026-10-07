@@ -37,19 +37,24 @@ export default {
           : [];
 
         const contents = messages
-          .filter(
-            m =>
-              m &&
-              (m.role === "user" || m.role === "assistant")
-          )
-          .map(m => ({
-            role: m.role === "assistant" ? "model" : "user",
-            parts: [
-              {
-                text: String(m.content || "")
-              }
-            ]
-          }));
+  .filter(
+    m =>
+      m &&
+      (m.role === "user" || m.role === "assistant")
+  )
+  .map(m => ({
+    role: m.role === "assistant" ? "model" : "user",
+    parts: [
+      {
+        text: String(m.content || "")
+      }
+    ]
+  }));
+
+// Gemini harus menerima pesan terakhir dari user.
+while (contents.length && contents[contents.length - 1].role === "model") {
+  contents.pop();
+}
 
         const response = await fetch(
           "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=" +
