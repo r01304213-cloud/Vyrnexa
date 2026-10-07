@@ -126,7 +126,7 @@ function md(t){const bl=[];t=esc(t).replace(/```(\w*)\n?([\s\S]*?)```/g,(m,l,c)=
  return t.replace(/\u0000(\d+)\u0000/g,(m,i)=>bl[i])}
 /* ---- provider layer: replace/add providers here to connect the real NEXUS backend ---- */
 function buildPrompt(c){return[{role:'system',content:S.set.sys},{role:'system',content:'Preferences: language='+S.set.lang+'; temperature='+S.set.temp},{role:'system',content:'Memory:\n'+(S.mem.map(m=>'['+m.cat+'] '+m.t).join('\n')||'(none)')},{role:'system',content:'Project: '+P().name+'\n'+P().notes},...searchLayer(),...metaLayer(),...c.msgs.map(m=>({role:m.r==='u'?'user':'assistant',content:m.t}))]}
-const GEMINI_ENDPOINT='/api/gemini';
+const GEMINI_ENDPOINT='https://vyrnexa.r01304213.workers.dev/api/gemini';
 const providers={gemini:{name:'Gemini API',connected:true,async*stream(msgs,ctx,ctl){
   const payload={messages:msgs,temperature:Number(S.set.temp)||0.7,files:ctx.files||[],attachments:ctx.atts||[],meta:ctx.meta||[]};
   const r=await fetch(GEMINI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload),signal:(ctl.signal||undefined)});
