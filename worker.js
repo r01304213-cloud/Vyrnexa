@@ -2,27 +2,53 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // API Gemini untuk Vyrnexa
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "https://r01304213-cloud.github.io",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Accept",
+      "Content-Type": "application/json"
+    };
+
+    // CORS preflight
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: corsHeaders
+      });
+    }
+
+    // Gemini API
     if (url.pathname === "/api/gemini") {
       if (request.method !== "POST") {
         return new Response(
           JSON.stringify({ error: "Method not allowed" }),
           {
             status: 405,
-            headers: { "Content-Type": "application/json" }
+            headers: corsHeaders
           }
         );
       }
 
       try {
         const body = await request.json();
-        const messages = Array.isArray(body.messages) ? body.messages : [];
+
+        const messages = Array.isArray(body.messages)
+          ? body.messages
+          : [];
 
         const contents = messages
-          .filter(m => m && (m.role === "user" || m.role === "assistant"))
+          .filter(
+            m =>
+              m &&
+              (m.role === "user" || m.role === "assistant")
+          )
           .map(m => ({
             role: m.role === "assistant" ? "model" : "user",
-            parts: [{ text: String(m.content || "") }]
+            parts: [
+              {
+                text: String(m.content || "")
+              }
+            ]
           }));
 
         const response = await fetch(
@@ -36,7 +62,8 @@ export default {
             body: JSON.stringify({
               contents,
               generationConfig: {
-                temperature: Number(body.temperature) || 0.7
+                temperature:
+                  Number(body.temperature) || 0.7
               }
             })
           }
@@ -47,11 +74,13 @@ export default {
         if (!response.ok) {
           return new Response(
             JSON.stringify({
-              error: data?.error?.message || "Gemini API error"
+              error:
+                data?.error?.message ||
+                "Gemini API error"
             }),
             {
               status: response.status,
-              headers: { "Content-Type": "application/json" }
+              headers: corsHeaders
             }
           );
         }
@@ -61,24 +90,37 @@ export default {
             ?.map(p => p.text || "")
             .join("") || "";
 
-        return new Response(JSON.stringify({ text }), {
-          headers: { "Content-Type": "application/json" }
-        });
+        return new Response(
+          JSON.stringify({ text }),
+          {
+            status: 200,
+            headers: corsHeaders
+          }
+        );
 
       } catch (error) {
         return new Response(
-          JSON.stringify({ error: error.message || "Server error" }),
+          JSON.stringify({
+            error:
+              error?.message ||
+              "Server error"
+          }),
           {
             status: 500,
-            headers: { "Content-Type": "application/json" }
+            headers: corsHeaders
           }
         );
       }
     }
 
-    // Selain API, layani index.html
-    return new Response("Vyrnexa Worker aktif.", {
-      headers: { "Content-Type": "text/plain" }
-    });
+    return new Response(
+      JSON.stringify({
+        status: "Vyrnexa Worker aktif"
+      }),
+      {
+        status: 200,
+        headers: corsHeaders
+      }
+    );
   }
 };
